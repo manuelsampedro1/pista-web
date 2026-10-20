@@ -4,7 +4,6 @@
       {
         "appIDs": ["6BG94RDHDG.com.manuelsampedro.pista"],
         "components": [
-          { "/": "/p/*", "comment": "Planes compartidos: /p/CODIGO" },
           { "/": "/i/*", "comment": "Invitaciones: /i/CODIGO" },
           { "/": "/e/*", "comment": "Embajadores: /e/PISTA-NOMBRE" },
           { "/": "/a/*", "comment": "Acceso desde la lista de espera: /a/CODIGO" }

@@ -37,7 +37,8 @@
         lede: 'Pista es la app de citas para gente que entrena. Con esta invitación entras sin lista de espera.',
         code_label: 'Código de invitación',
         reward: function (r) { return ' Y cuando lleves ' + r.validation_days + ' días con el perfil completo, los dos tenéis ' + r.text + '.'; },
-        days: function (n) { return n + ' días de Pista+'; },
+        boosts: function (n) { return n === 1 ? 'un Boost' : n + ' Boosts'; },
+        aces: function (n) { return n === 1 ? 'un Ace' : n + ' Aces'; },
         likes: function (n) { return n + ' likes extra'; },
         steps: ['Descarga Pista en tu iPhone.', 'Entra con Apple y crea tu perfil.', 'Escribe el código donde pone ¿Tienes una invitación o un código?'],
         fallback: 'Cada invitación sirve para una persona y caduca a los pocos días.',
@@ -71,7 +72,8 @@
         lede: 'Pista is the dating app for people who train. With this invite you skip the waitlist.',
         code_label: 'Invite code',
         reward: function (r) { return ' And after ' + r.validation_days + ' days with a complete profile, you both get ' + r.text + '.'; },
-        days: function (n) { return n + ' days of Pista+'; },
+        boosts: function (n) { return n === 1 ? 'a Boost' : n + ' Boosts'; },
+        aces: function (n) { return n === 1 ? 'an Ace' : n + ' Aces'; },
         likes: function (n) { return n + ' extra likes'; },
         steps: ['Download Pista on your iPhone.', 'Sign in with Apple and create your profile.', 'Type the code under Got an invite or a code?'],
         fallback: 'Each invite works for one person and expires after a few days.',
@@ -160,7 +162,8 @@
         set('title', t.title(escapeHtml(inv.inviter_name)), true);
         if (!inv.valid) { error(t.used); return; }
         var r = inv.reward || {};
-        var text = r.type === 'premium_days' && r.premium_days > 0 ? t.days(r.premium_days)
+        var text = r.type === 'boosts' && r.boosts > 0 ? t.boosts(r.boosts)
+          : r.type === 'aces' && r.aces > 0 ? t.aces(r.aces)
           : r.type === 'likes' && r.likes > 0 ? t.likes(r.likes) : '';
         if (text) set('lede', t.lede + t.reward({ validation_days: r.validation_days, text: text }));
       } catch (e) { /* se enseña el código igualmente */ }

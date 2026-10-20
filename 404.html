@@ -32,10 +32,10 @@
 <script src="/assets/site.js" defer></script>
 <script>
 /* GitHub Pages sirve esta página para cualquier ruta que no existe. Los enlaces cortos se redirigen a
-   páginas reales: /p/CODIGO (plan), /i/CODIGO (invitación), /e/PISTA-NOMBRE (embajador),
+   páginas reales: /i/CODIGO (invitación), /e/PISTA-NOMBRE (embajador),
    /a/CODIGO (acceso de la lista de espera) y /r/CODIGO (apuntarse a la lista con el enlace de alguien). */
 (function () {
-  var m = location.pathname.match(/^\/(p|i|e|a|r)\/([A-Za-z0-9-]{4,30})\/?$/);
+  var m = location.pathname.match(/^\/(i|e|a|r)\/([A-Za-z0-9-]{4,30})\/?$/);
   if (!m) return;
   document.documentElement.style.visibility = 'hidden';
   var target = m[1] === 'r' ? '/lista/?r=' : '/' + m[1] + '/?c=';
