@@ -1,0 +1,7 @@
+# GitHub Pages (Jekyll). La web es HTML estático: Jekyll solo copia los archivos.
+# Jekyll ignora por defecto las carpetas que empiezan por punto; esto publica
+# .well-known/apple-app-site-association para los enlaces universales de iOS.
+include:
+  - .well-known
+exclude:
+  - _tools

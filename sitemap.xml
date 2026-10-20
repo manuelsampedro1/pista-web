@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://pista.one/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/"/>
+  </url>
+  <url>
+    <loc>https://pista.one/en/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/"/>
+  </url>
+  <url>
+    <loc>https://pista.one/lista/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/lista/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/waitlist/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/lista/"/>
+  </url>
+  <url>
+    <loc>https://pista.one/en/waitlist/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/lista/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/waitlist/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/lista/"/>
+  </url>
+  <url>
+    <loc>https://pista.one/privacidad.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/privacidad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/privacidad.html"/>
+  </url>
+  <url>
+    <loc>https://pista.one/en/privacy.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/privacidad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/privacidad.html"/>
+  </url>
+  <url>
+    <loc>https://pista.one/terminos.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/terminos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/terminos.html"/>
+  </url>
+  <url>
+    <loc>https://pista.one/en/terms.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/terminos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/terminos.html"/>
+  </url>
+  <url>
+    <loc>https://pista.one/normas.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/normas.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/guidelines.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/normas.html"/>
+  </url>
+  <url>
+    <loc>https://pista.one/en/guidelines.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/normas.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/guidelines.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/normas.html"/>
+  </url>
+  <url>
+    <loc>https://pista.one/soporte.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/soporte.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/support.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/soporte.html"/>
+  </url>
+  <url>
+    <loc>https://pista.one/en/support.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/soporte.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/support.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/soporte.html"/>
+  </url>
+  <url>
+    <loc>https://pista.one/eliminar-cuenta.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/eliminar-cuenta.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/delete-account.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/eliminar-cuenta.html"/>
+  </url>
+  <url>
+    <loc>https://pista.one/en/delete-account.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pista.one/eliminar-cuenta.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pista.one/en/delete-account.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pista.one/eliminar-cuenta.html"/>
+  </url>
+</urlset>

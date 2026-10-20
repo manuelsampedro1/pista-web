@@ -1,0 +1,36 @@
+# Pista
+
+> Pista es una app de citas para iPhone pensada para gente que hace deporte. Cada perfil enseña sus deportes, su nivel y cuándo entrena, y desde el chat se puede proponer un plan para conocerse jugando. Empieza en España: Madrid, Barcelona y Valencia. Pista is an iPhone dating app for people who play sport, starting in Spain.
+
+## Qué es
+
+- App de citas solo para iPhone, en español de España e inglés británico.
+- Para gente que juega al pádel, corre, va al gimnasio, hace Hyrox, CrossFit, tenis, surf, escalada, ciclismo, trail, triatlón, natación, vóley playa, yoga o remo, entre otros.
+- Cada perfil tiene hasta cinco deportes, cada uno con su nivel (por diversión, constante o a tope), y los horarios en los que la persona entrena.
+- Los likes se dan a algo concreto del perfil (una foto, una respuesta, una marca deportiva) y pueden llevar un comentario.
+- Desde el chat se puede proponer un plan con deporte, sitio y hora. También hay planes de grupo abiertos en cada ciudad.
+- En deportes de dobles (pádel, tenis, vóley playa, Hyrox Doubles) se puede marcar que buscas pareja.
+- Cada perfil puede llevar un enlace a su Strava. Pista no lee datos de Strava, solo enseña el botón para abrirlo.
+- Los 1.000 primeros perfiles completos de cada ciudad reciben un número de fundador.
+
+## Precio
+
+- Gratis: 12 likes al día, un Ace a la semana, chat y planes.
+- Pista+ (suscripción): likes ilimitados, ver a quién le gustas, filtros por deporte, nivel y horario, tres Aces y un Boost cada semana, y deshacer el último perfil que pasaste.
+
+## Seguridad y privacidad
+
+- Solo mayores de 18. Nadie ve la fecha de nacimiento, solo la edad.
+- Se guarda una ubicación aproximada y solo se enseña la distancia en kilómetros.
+- Denunciar y bloquear desde cualquier perfil, chat o plan. Las denuncias se revisan en menos de 24 horas.
+- Datos alojados en la Unión Europea. Sin anuncios ni venta de datos.
+
+## Enlaces
+
+- [Inicio en español](https://pista.one/)
+- [Home in English](https://pista.one/en/)
+- [Normas de la comunidad](https://pista.one/normas.html)
+- [Política de privacidad](https://pista.one/privacidad.html)
+- [Términos](https://pista.one/terminos.html)
+- [Soporte](https://pista.one/soporte.html)
+- [Eliminar la cuenta](https://pista.one/eliminar-cuenta.html)

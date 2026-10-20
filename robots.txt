@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /embajadores/
+Disallow: /en/ambassadors/
+Disallow: /a/
+
+Sitemap: https://pista.one/sitemap.xml
