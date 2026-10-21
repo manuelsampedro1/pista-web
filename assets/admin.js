@@ -10,7 +10,8 @@
   var dtf = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: '2-digit', hour: '2-digit', minute: '2-digit' });
   var TABS = [
     ['overview', 'Resumen'], ['config', 'Configuración'], ['cities', 'Ciudades'], ['waitlist', 'Lista de espera'],
-    ['ambassadors', 'Embajadores'], ['denuncias', 'Denuncias'], ['review', 'Antifraude'], ['funnel', 'Embudo']
+    ['ambassadors', 'Embajadores'], ['denuncias', 'Denuncias'], ['verificaciones', 'Verificaciones'], ['review', 'Antifraude'],
+    ['funnel', 'Embudo']
   ];
   var ERR = {
     INVALID: 'Valor no válido. Revisa el tipo y el rango.', NOT_ALLOWED: 'Esta cuenta no es admin.',
@@ -122,6 +123,7 @@
 
   PANES.overview = async function () {
     var o = await call('admin_overview');
+    var pendingVerifications = await call('admin_pending_verifications').catch(function () { return 0; });
     var w = o.waitlist || {};
     var a = o.accounts || {};
     pane.innerHTML = '';
@@ -132,6 +134,7 @@
         kpi('Dentro de la app', nf.format(a.admitted || 0), true), kpi('Esperando en la app', nf.format(a.waiting || 0)),
         kpi('Validados', nf.format(a.validated || 0)), kpi('Pista+ activos', nf.format(a.premium || 0)),
         kpi('Denuncias abiertas', nf.format(o.open_reports || 0), o.open_reports > 0), kpi('Cuentas suspendidas', nf.format(a.suspended || 0)),
+        kpi('Verificaciones por revisar', nf.format(pendingVerifications || 0), pendingVerifications > 0),
         kpi('Invitaciones esta semana', nf.format(o.invites_this_week || 0)), kpi('Antifraude por revisar', nf.format(o.open_flags || 0), o.open_flags > 0),
         kpi('Comisiones pendientes', euros((o.commissions || {}).pending)), kpi('Comisiones aprobadas', euros((o.commissions || {}).approved))
       ]),
@@ -233,8 +236,8 @@
         var n = el('input', { class: 'input', type: 'number', min: 1, max: 5000, value: 50, style: 'width:90px;height:40px' });
         var bal = el('input', { type: 'checkbox', checked: true });
         return el('div', { class: 'row' }, [n,
-          el('label', { class: 'check', style: 'grid-template-columns:22px auto;font-size:13px', title: 'Alterna mujeres, hombres y el resto para que la tanda salga equilibrada' },
-            [bal, el('span', { text: 'Equilibrar' })]),
+          el('label', { class: 'check', style: 'grid-template-columns:22px auto;font-size:13px', title: 'Reparte la tanda según lo que necesita la ciudad (quién busca a quién) y, dentro de cada grupo, pasa antes quien tiene el perfil hecho, ha invitado o lleva más esperando. Sin marcar: por orden de llegada.' },
+            [bal, el('span', { text: 'Inteligente' })]),
           el('button', { class: 'btn small ghost', type: 'button', text: 'Ver', onclick: async function () {
             var list = await call('admin_batch_preview', { p_city: r.slug, p_count: Number(n.value), p_balance: bal.checked });
             preview.innerHTML = '';
@@ -242,11 +245,19 @@
               { label: '#', key: 'position', num: true }, { label: 'Correo', render: function (x) { return x.email || 'Cuenta de la app'; } },
               { label: 'Género', render: function (x) { return GENDER_ONE[x.gender] || ''; } },
               { label: 'Deportes', render: function (x) { return (x.sports || []).join(', '); } },
-              { label: 'Puntos', key: 'points', num: true }, { label: 'Desde', render: function (x) { return date(x.created_at); } }
+              { label: 'Puntos', key: 'points', num: true }, { label: 'Desde', render: function (x) { return date(x.created_at); } },
+              { label: 'Por qué', render: function (x) {
+                var why = [];
+                if (bal.checked && x.share != null) why.push((GENDER_ONE[x.gender] || 'Sin género') + ': ' + Math.round(x.share * 100) + ' % de la tanda');
+                if (x.profile_ready) why.push('perfil hecho en la app');
+                if (x.points) why.push(x.points + ' puntos por invitar');
+                if (x.waited_days) why.push(x.waited_days + (x.waited_days === 1 ? ' día' : ' días') + ' esperando');
+                return el('span', { class: 'muted', style: 'font-size:13px', text: why.join(' · ') });
+              } }
             ], list)]));
           } }),
           el('button', { class: 'btn small', type: 'button', text: 'Admitir', onclick: async function () {
-            if (!confirm('¿Admitir a ' + n.value + ' personas de ' + r.name + (bal.checked ? ', equilibrando por género' : ', por orden de la lista') + '? Les llega el correo con su código.')) return;
+            if (!confirm('¿Admitir a ' + n.value + ' personas de ' + r.name + (bal.checked ? ', según lo que necesita la ciudad' : ', por orden de la lista') + '? Les llega el correo con su código.')) return;
             try { var res = await call('admin_admit_batch', { p_city: r.slug, p_count: Number(n.value), p_balance: bal.checked }); toast(res.admitted + ' admitidos'); open(); } catch (err) { fail(err); }
           } })]);
       } },
@@ -462,6 +473,83 @@
     ]));
     target.scrollIntoView({ behavior: 'smooth' });
   }
+
+  // ---------- Verificaciones con selfie ----------
+
+  var CFG = window.PISTA_CONFIG || {};
+  var BASE = String(CFG.SUPABASE_URL || '').replace(/\/$/, '');
+  function photoUrl(path) { return BASE + '/storage/v1/object/public/photos/' + path; }
+  // Las selfies viven en un cubo privado: el panel pide un enlace de 10 minutos con la sesión del admin.
+  async function storage(method, path, body) {
+    var s = await api.session();
+    var res = await fetch(BASE + '/storage/v1/' + path, {
+      method: method,
+      headers: { 'Content-Type': 'application/json', apikey: CFG.SUPABASE_PUBLISHABLE_KEY, Authorization: 'Bearer ' + (s && s.access_token) },
+      body: body ? JSON.stringify(body) : undefined
+    });
+    if (!res.ok) throw new Error('storage ' + res.status);
+    return res.json().catch(function () { return {}; });
+  }
+  async function selfieUrl(path) {
+    var r = await storage('POST', 'object/sign/verifications/' + path, { expiresIn: 600 });
+    return BASE + '/storage/v1' + r.signedURL;
+  }
+  async function deleteSelfie(row) {
+    try {
+      await storage('DELETE', 'object/verifications', { prefixes: [row.selfie_path] });
+      await call('admin_mark_selfie_deleted', { p_id: row.id });
+    } catch (err) { toast('La selfie no se ha podido borrar. Vuelve a abrir la pestaña para reintentarlo.'); }
+  }
+  function picture(url, alt) {
+    return el('img', { src: url, alt: alt, loading: 'lazy', style: 'width:150px;height:188px;object-fit:cover;border-radius:12px;background:#eee' });
+  }
+
+  PANES.verificaciones = async function () {
+    pane.innerHTML = '';
+    var status = el('select', { class: 'input', style: 'max-width:220px' }, [['pending', 'Por revisar'], ['approved', 'Verificadas'], ['rejected', 'Rechazadas']]
+      .map(function (o) { return el('option', { value: o[0], text: o[1] }); }));
+    var list = el('div', { class: 'stack' });
+    var GESTURES = { open_hand: 'mano abierta junto a la cara', thumbs_up: 'pulgar arriba', peace: 'signo de la paz', index_up: 'dedo índice arriba' };
+    async function load() {
+      var rows = await call('admin_verifications', { p_status: status.value });
+      list.innerHTML = '';
+      if (!rows.length) { list.appendChild(el('p', { class: 'muted', text: 'Nada por aquí.' })); return; }
+      rows.forEach(function (r) {
+        var a = r.account || {};
+        var selfie = el('div', { class: 'muted', style: 'width:150px', text: r.selfie_deleted ? 'Selfie borrada tras revisarla.' : 'Cargando selfie…' });
+        if (!r.selfie_deleted) {
+          selfieUrl(r.selfie_path).then(function (url) { selfie.replaceWith(picture(url, 'Selfie de verificación')); })
+            .catch(function () { selfie.textContent = 'No se ha podido cargar la selfie.'; });
+          // Quedó sin borrar en una revisión anterior: se borra ahora.
+          if (r.status !== 'pending') deleteSelfie(r);
+        }
+        var reason = el('input', { class: 'input', placeholder: 'Motivo si la rechazas (lo verá la persona)', style: 'max-width:360px' });
+        function review(approve) {
+          return el('button', { class: 'btn small ' + (approve ? '' : 'danger'), type: 'button', text: approve ? 'Verificar' : 'Rechazar', onclick: async function () {
+            if (!approve && !reason.value.trim()) { toast('Escribe el motivo para rechazarla.'); return; }
+            try {
+              var res = await call('admin_review_verification', { p_id: r.id, p_approve: approve, p_reason: reason.value || null });
+              await deleteSelfie({ id: r.id, selfie_path: res.selfie_path || r.selfie_path });
+              toast(approve ? 'Verificada' : 'Rechazada'); load();
+            } catch (err) { fail(err); }
+          } });
+        }
+        list.appendChild(box(null, [
+          el('div', { class: 'row' }, [tag('Gesto pedido: ' + (GESTURES[r.gesture] || r.gesture)),
+            el('span', { class: 'muted', text: (a.name || 'sin nombre') + ' · ' + (a.city || '') + ' · enviada ' + date(r.submitted_at) })]),
+          el('p', { class: 'muted', text: 'Comprueba que es la misma persona que en sus fotos y que hace el gesto pedido.' }),
+          el('div', { class: 'row', style: 'align-items:flex-start;gap:10px;flex-wrap:wrap' },
+            [selfie].concat((r.photos || []).map(function (path) { return picture(photoUrl(path), 'Foto del perfil'); }))),
+          r.status === 'pending'
+            ? el('div', { class: 'row' }, [reason, review(true), review(false)])
+            : el('p', { class: 'muted', text: (r.status === 'approved' ? 'Verificada' : 'Rechazada') + (r.reviewed_at ? ' el ' + date(r.reviewed_at) : '') + (r.reason ? ': ' + r.reason : '') })
+        ]));
+      });
+    }
+    status.onchange = load;
+    pane.appendChild(el('div', { class: 'stack' }, [el('div', { class: 'row' }, [status]), list]));
+    await load();
+  };
 
   PANES.denuncias = async function () {
     pane.innerHTML = '';
