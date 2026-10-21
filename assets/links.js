@@ -137,7 +137,8 @@
     set('store', T.common.store);
     set('fallback', t.fallback, true);
     box.querySelector('[data-steps]').innerHTML = t.steps.map(function (s) { return '<li>' + s + '</li>'; }).join('');
-    if (cfg.APP_STORE_URL) box.querySelector('[data-store]').href = cfg.APP_STORE_URL;
+    // Sin app publicada no hay botón de la App Store.
+    if (cfg.APP_STORE_URL) { box.querySelector('[data-store]').href = cfg.APP_STORE_URL; box.querySelector('[data-store]').hidden = false; }
     box.querySelector('[data-copy]').hidden = true;
 
     var code = readCode();

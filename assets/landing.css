@@ -1,0 +1,121 @@
+/* Pista, portada nueva: corta, con caras y con la lista de espera delante. Usa la base de home.css
+   (fuentes, colores, cabecera, preguntas y pie) y las tarjetas del formulario de pages.css. */
+
+.lp { background: var(--paper); }
+.lp em { font-style: italic; }
+.lp-kicker { font: 600 13px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 18px; }
+.lp h2 { font-family: var(--serif); font-weight: 430; font-optical-sizing: auto; font-size: clamp(42px, 6.4vw, 96px); line-height: .95; letter-spacing: -.025em; max-width: 16ch; }
+
+.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.js .reveal.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1; transform: none; transition: none; } }
+
+/* ---------- Portada ---------- */
+.lp-hero { position: relative; min-height: 100svh; color: var(--white); isolation: isolate; display: flex; align-items: flex-end; background: #23241f; }
+.lp-hero-media, .lp-hero-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
+.lp-hero-media { z-index: -2; }
+.lp-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(8, 10, 8, .5) 0%, rgba(8, 10, 8, 0) 22%),
+    linear-gradient(90deg, rgba(8, 10, 8, .62) 0%, rgba(8, 10, 8, .25) 46%, rgba(8, 10, 8, 0) 70%),
+    linear-gradient(0deg, rgba(8, 10, 8, .55) 0%, rgba(8, 10, 8, 0) 45%);
+}
+.lp-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, 440px); gap: clamp(28px, 5vw, 80px); align-items: end; padding-top: 120px; padding-bottom: clamp(32px, 7vh, 72px); }
+.lp-eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 500 15px/1 var(--sans); padding: 10px 16px; border-radius: 999px; background: rgba(255, 255, 255, .14); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.live { width: 8px; height: 8px; border-radius: 50%; background: var(--volt); box-shadow: 0 0 0 0 rgba(215, 242, 75, .7); animation: live 2s infinite; }
+@keyframes live { 0% { box-shadow: 0 0 0 0 rgba(215, 242, 75, .6); } 70% { box-shadow: 0 0 0 10px rgba(215, 242, 75, 0); } 100% { box-shadow: 0 0 0 0 rgba(215, 242, 75, 0); } }
+@media (prefers-reduced-motion: reduce) { .live { animation: none; } }
+.lp-hero h1 { margin-top: 22px; font-family: var(--serif); font-weight: 430; font-optical-sizing: auto; font-size: clamp(54px, 8.4vw, 136px); line-height: .9; letter-spacing: -.03em; max-width: 9.5ch; text-wrap: balance; }
+.lp-hero h1 em { color: var(--volt); }
+.lp-lede { margin-top: 24px; max-width: 34ch; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.5; color: rgba(255, 255, 255, .9); }
+.lp-count { margin-top: 18px; font-size: 15px; color: rgba(255, 255, 255, .85); }
+.lp-count b { font-weight: 600; color: var(--volt); font-variant-numeric: tabular-nums; }
+.lp-form { scroll-margin-top: 96px; }
+.lp-form .wl-card { color: var(--ink); }
+.lp-form .wl-card h2 { font-size: clamp(30px, 3vw, 38px); max-width: none; }
+
+/* ---------- Cómo funciona ---------- */
+.lp-how { padding: clamp(84px, 12vw, 160px) 0; }
+.lp-steps { margin-top: clamp(48px, 7vw, 88px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(28px, 4vw, 64px); }
+.lp-step { display: grid; gap: 30px; align-content: start; }
+.lp-step:nth-child(2) { margin-top: clamp(0px, 6vw, 90px); }
+.lp-step:nth-child(3) { margin-top: clamp(0px, 12vw, 180px); }
+.lp-step h3 { font: 500 clamp(22px, 2vw, 26px)/1.2 var(--sans); letter-spacing: -.01em; }
+.lp-step p { margin-top: 10px; color: var(--ink-2); font-size: 17px; max-width: 34ch; }
+.lp-step-text { display: grid; grid-template-columns: 44px 1fr; column-gap: 16px; }
+.lp-step-text > *:not(.lp-num) { grid-column: 2; }
+.lp-num { grid-row: 1 / span 2; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--volt); color: var(--court); font: 600 18px/1 var(--sans); margin-top: 0 !important; }
+
+.lp-phone { position: relative; width: min(100%, 320px); aspect-ratio: 600 / 1304; padding: 9px; border-radius: 52px; background: linear-gradient(145deg, #3a3d36, #111310 40%, #2a2c27); box-shadow: 0 2px 0 rgba(255, 255, 255, .08) inset, 0 40px 80px -20px rgba(18, 20, 17, .45), 0 18px 36px -18px rgba(18, 20, 17, .4); }
+.lp-screen { width: 100%; height: 100%; border-radius: 44px; overflow: hidden; background: var(--paper); }
+.lp-screen img { width: 100%; height: 100%; object-fit: cover; }
+.lp-island { position: absolute; top: 20px; left: 50%; width: 30%; height: 26px; border-radius: 999px; background: #000; transform: translateX(-50%); }
+
+/* ---------- Primeras citas ---------- */
+.lp-dates { padding: clamp(84px, 12vw, 150px) 0; background: var(--canvas); overflow: hidden; }
+.lp-head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 40px; align-items: end; }
+.lp-head > p { color: var(--ink-2); font-size: 18px; max-width: 38ch; }
+.lp-dates-track { margin-top: clamp(44px, 6vw, 72px); display: grid; grid-auto-flow: column; grid-auto-columns: clamp(260px, 30vw, 420px); gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter) 18px; scroll-padding: 0 var(--gutter); scrollbar-width: none; }
+.lp-dates-track::-webkit-scrollbar { display: none; }
+.lp-date { position: relative; scroll-snap-align: start; border-radius: 26px; overflow: hidden; aspect-ratio: 4 / 5; background: #ccc; }
+.lp-date img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.lp-date:hover img { transform: scale(1.04); }
+.lp-date figcaption { position: absolute; inset: auto 0 0; padding: 60px 22px 22px; color: var(--white); background: linear-gradient(0deg, rgba(8, 10, 8, .72), rgba(8, 10, 8, 0)); display: grid; gap: 4px; }
+.lp-date figcaption b { font: 450 clamp(24px, 2.2vw, 30px)/1.05 var(--serif); letter-spacing: -.01em; }
+.lp-date figcaption span { font-size: 15px; color: rgba(255, 255, 255, .85); }
+
+/* ---------- Seguridad ---------- */
+.lp-trust { padding: clamp(84px, 12vw, 150px) 0; background: var(--court); color: var(--paper); }
+.lp-trust .lp-kicker { color: rgba(251, 250, 247, .6); }
+.lp-trust h2 em { color: var(--volt); }
+.lp-trust-grid { margin-top: clamp(44px, 6vw, 72px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+.lp-trust-grid li { padding-top: 24px; border-top: 1px solid rgba(251, 250, 247, .2); }
+.lp-trust-grid svg { width: 38px; height: 38px; color: var(--volt); }
+.lp-trust-grid h3 { margin-top: 20px; font: 500 20px/1.25 var(--sans); }
+.lp-trust-grid p { margin-top: 8px; font-size: 16px; color: rgba(251, 250, 247, .75); }
+.lp-more { display: inline-block; margin-top: 44px; color: var(--paper); text-underline-offset: 4px; }
+
+/* ---------- Madrid ---------- */
+.lp-madrid { position: relative; isolation: isolate; color: var(--white); min-height: min(92svh, 860px); display: flex; align-items: center; text-align: center; overflow: hidden; }
+.lp-madrid-photo { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.lp-madrid::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at center, rgba(8, 10, 8, .55), rgba(8, 10, 8, .35) 70%); }
+.lp-madrid-inner { display: grid; justify-items: center; gap: 24px; padding-top: 80px; padding-bottom: 80px; }
+.lp-madrid h2 { max-width: 12ch; font-size: clamp(54px, 9vw, 150px); }
+.lp-madrid h2 em { color: var(--volt); }
+.lp-madrid p { max-width: 46ch; font-size: clamp(17px, 1.5vw, 20px); color: rgba(255, 255, 255, .92); }
+
+/* ---------- Móvil ---------- */
+@media (max-width: 960px) {
+  .lp-hero { display: block; min-height: 0; background: var(--paper); }
+  .lp-hero-media { position: relative; display: block; height: 78svh; min-height: 520px; }
+  .lp-hero-media img { position: absolute; }
+  .lp-hero::before { bottom: auto; height: 78svh; min-height: 520px; background:
+    linear-gradient(180deg, rgba(8, 10, 8, .55) 0%, rgba(8, 10, 8, 0) 26%),
+    linear-gradient(0deg, rgba(8, 10, 8, .75) 0%, rgba(8, 10, 8, .2) 50%, rgba(8, 10, 8, 0) 70%); }
+  .lp-hero-grid { grid-template-columns: 1fr; padding-top: 0; padding-bottom: 32px; margin-top: calc(-1 * min(42svh, 360px)); position: relative; }
+  .lp-hero h1 { font-size: clamp(50px, 13.5vw, 84px); }
+  .lp-lede { font-size: 17px; }
+  .lp-form { margin-top: 8px; }
+  .lp-steps { grid-template-columns: 1fr; gap: 72px; }
+  .lp-step, .lp-step:nth-child(2), .lp-step:nth-child(3) { margin-top: 0; justify-items: center; }
+  .lp-step-text { max-width: 420px; }
+  .lp-phone { width: min(78vw, 320px); }
+  .lp-head { grid-template-columns: 1fr; gap: 18px; }
+  .lp-dates-track { grid-auto-columns: 78vw; }
+  .lp-trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .lp-trust-grid { grid-template-columns: 1fr; }
+  .lp-hero .lp-lede { max-width: none; }
+}
+
+/* En escritorio las seis citas se ven todas a la vez; en móvil se pasan con el dedo. */
+@media (min-width: 961px) {
+  .lp-dates-track { max-width: 1440px; margin-left: auto; margin-right: auto; grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; scroll-snap-type: none; padding-bottom: 0; }
+  .lp-date:nth-child(3n + 2) { transform: translateY(48px); }
+  .lp-date.reveal:nth-child(3n + 2) { transform: translateY(76px); }
+  .lp-date.reveal.is-in:nth-child(3n + 2) { transform: translateY(48px); }
+  .lp-dates { padding-bottom: calc(clamp(84px, 12vw, 150px) + 48px); }
+}
+.lp .footer .wm-big { width: min(100%, 760px); margin-left: auto; margin-right: auto; }
