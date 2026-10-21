@@ -8,8 +8,8 @@
 window.PISTA_CONFIG = {
   SUPABASE_URL: "https://tthnmvqtpxaqujrhdekq.supabase.co",
   SUPABASE_PUBLISHABLE_KEY: "sb_publishable_Tfu2ONzrWc3m9qMg2kTPMA_-I7A1uen",
-  // Vacío hasta que la app esté en la App Store; entonces, "https://apps.apple.com/app/id<ID>"
-  // aquí y en APP_STORE_ID de _tools/build_home.py.
+  // Vacío hasta el lanzamiento; entonces, "https://apps.apple.com/app/id6825145499" aquí y
+  // APP_STORE_LIVE = True en _tools/chrome.py (y volver a generar las páginas).
   APP_STORE_URL: "",
   SITE_URL: "https://pista.one"
 };

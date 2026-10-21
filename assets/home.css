@@ -227,12 +227,6 @@ button { font: inherit; color: inherit; }
 .cities { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px; }
 .cities li { padding: 10px 16px; border: 1px solid rgba(251, 250, 247, .2); border-radius: 999px; font-size: 15px; color: rgba(251, 250, 247, .86); }
 
-/* ---------- Fundadores ---------- */
-.founders { background: var(--paper); padding: clamp(110px, 16vh, 190px) 0; }
-.founders-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 7vw, 120px); align-items: center; }
-.founders h2 { margin-top: 20px; font-family: var(--serif); font-weight: 430; font-size: clamp(40px, 5.4vw, 96px); line-height: .96; letter-spacing: -.022em; }
-.founders h2 em { font-style: italic; }
-.founders .lede { margin-top: 22px; max-width: 500px; color: var(--ink-2); font-size: 18px; }
 .facts { margin-top: 36px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
 .facts div { padding: 20px 0; border-bottom: 1px solid var(--line); }
 .facts div:nth-child(odd) { padding-right: 18px; border-right: 1px solid var(--line); }
@@ -322,7 +316,7 @@ button { font: inherit; color: inherit; }
   .scroll-cue { display: none; }
   .hero h1 { font-size: clamp(52px, 14.5vw, 96px); }
   .hero-foot { flex-direction: column; align-items: flex-start; }
-  .section-head, .play-grid, .third-grid, .founders-grid, .faq-grid { grid-template-columns: minmax(0, 1fr); }
+  .section-head, .play-grid, .third-grid, .faq-grid { grid-template-columns: minmax(0, 1fr); }
   .section-head > p { justify-self: start; }
   .phone-col { display: none; }
   .step { min-height: 0; padding: 56px 0; }

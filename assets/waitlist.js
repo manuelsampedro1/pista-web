@@ -1,7 +1,8 @@
 /* Pista, lista de espera. Alta en dos pasos (correo y ciudad; luego, si quiere, género, a quién busca y
    deportes), confirmación por correo, página privada de estado (?s=TOKEN) y contador en vivo. Sin cookies
    ni almacenamiento: el token privado va en la URL. Funciona en /lista/ y en la portada, donde solo hay
-   formulario y aviso de correo enviado. */
+   formulario y aviso de correo enviado (dos veces: arriba y en la banda final). Al apuntarse lanza el evento
+   "waitlist:sent", que la portada usa para que bote la pelota. */
 (function () {
   'use strict';
   var api = window.PistaAPI;
@@ -64,47 +65,25 @@
   }[lang];
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
-  var on = function (sel, ev, fn) { var el = $(sel); if (el) el.addEventListener(ev, fn); };
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+  var on = function (sel, ev, fn, root) { var el = $(sel, root); if (el) el.addEventListener(ev, fn); };
   // El servidor guarda los nombres de ciudad en español; "otras" se traduce aquí.
   var cityName = function (c) { return c.slug === 'otras' && lang === 'en' ? 'Another city' : c.name; };
   var nf = new Intl.NumberFormat(lang === 'es' ? 'es-ES' : 'en-GB');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var params = new URLSearchParams(location.search);
   var openedAt = Date.now();
-  var form = $('[data-view="form"]');
-  if (!form) return;
-  var views = { form: form, sent: $('[data-view="sent"]'), status: $('[data-view="status"]') };
+  // Puede haber más de un formulario en la página (la portada tiene dos): cada uno con sus vistas.
+  var forms = $$('[data-view="form"]');
+  if (!forms.length) return;
   var refCode = (params.get('r') || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
   if (!/^[A-HJ-NP-Z2-9]{8}$/.test(refCode)) refCode = '';
-  var lastSignup = null;
   var statusToken = null;
 
-  function show(name) {
-    Object.keys(views).forEach(function (k) { if (views[k]) views[k].hidden = k !== name; });
+  function reveal(el) {
+    if (window.PistaScrollTo) window.PistaScrollTo(el);
+    else el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
   }
-
-  // ---------- Pasos ----------
-
-  var stepLabel = $('[data-step-label]');
-  function goStep(n) {
-    form.setAttribute('data-step', String(n));
-    form.querySelectorAll('[data-pane]').forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== String(n); });
-    if (stepLabel) stepLabel.textContent = stepLabel.getAttribute('data-template').replace('{n}', n);
-    var first = form.querySelector('[data-pane="' + n + '"] input:not([type=hidden]):not([name=website])');
-    if (first && n === 2) first.focus({ preventScroll: true });
-    form.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
-  }
-
-  function values(name) {
-    return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '"]:checked'), function (i) { return i.value; });
-  }
-
-  // Tres deportes como mucho: el cuarto no se marca.
-  form.querySelectorAll('input[name="sports"]').forEach(function (box) {
-    box.addEventListener('change', function () {
-      if (box.checked && values('sports').length > 3) { box.checked = false; toast(T.sports_max); }
-    });
-  });
 
   function toast(text) {
     var el = $('[data-toast]');
@@ -136,6 +115,148 @@
              NOT_CONFIGURED: T.err_config }[code] || T.err_generic;
   }
 
+  function setBusy(button, busy) {
+    button.disabled = busy;
+    button.setAttribute('aria-busy', busy ? 'true' : 'false');
+  }
+
+  async function signup(payload) {
+    return api.rpc('waitlist_signup', {
+      p_email: payload.email, p_city: payload.city, p_locale: lang, p_ref: refCode || null,
+      p_consent: true, p_elapsed_ms: Date.now() - openedAt, p_website: payload.website || null,
+      p_gender: payload.gender || null, p_seeking: payload.seeking || null, p_sports: payload.sports || null,
+      p_profile_consent: !!payload.profileConsent
+    });
+  }
+
+  // ---------- Un formulario con sus vistas (formulario, correo enviado y, en /lista/, estado) ----------
+
+  function Waitlist(form) {
+    var root = form.parentNode;
+    var views = { form: form, sent: $('[data-view="sent"]', root), status: $('[data-view="status"]', root) };
+    var stepLabel = $('[data-step-label]', form);
+    var resend = $('[data-resend]', root);
+    var lastSignup = null;
+
+    function show(name) {
+      Object.keys(views).forEach(function (k) { if (views[k]) views[k].hidden = k !== name; });
+    }
+
+    function goStep(n) {
+      form.setAttribute('data-step', String(n));
+      $$('[data-pane]', form).forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== String(n); });
+      if (stepLabel) stepLabel.textContent = stepLabel.getAttribute('data-template').replace('{n}', n);
+      var first = form.querySelector('[data-pane="' + n + '"] input:not([type=hidden]):not([name=website])');
+      if (first && n === 2) first.focus({ preventScroll: true });
+      reveal(form);
+    }
+
+    function values(name) {
+      return $$('input[name="' + name + '"]:checked', form).map(function (i) { return i.value; });
+    }
+
+    // Tres deportes como mucho: el cuarto no se marca.
+    $$('input[name="sports"]', form).forEach(function (box) {
+      box.addEventListener('change', function () {
+        if (box.checked && values('sports').length > 3) { box.checked = false; toast(T.sports_max); }
+      });
+    });
+
+    function checkFirstStep() {
+      var error = $('[data-error]', form);
+      var email = form.email.value.trim();
+      var city = (form.querySelector('input[name="city"]:checked') || {}).value;
+      error.hidden = true;
+      form.email.removeAttribute('aria-invalid');
+      var fail = null;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { fail = T.err_email; form.email.setAttribute('aria-invalid', 'true'); }
+      else if (!city) fail = T.err_city;
+      else if (!form.consent.checked) fail = T.err_consent;
+      if (fail) { error.textContent = fail; error.hidden = false; return null; }
+      return { email: email, city: city, website: form.website.value };
+    }
+
+    on('[data-next]', 'click', function () { if (checkFirstStep()) goStep(2); }, form);
+    form.email.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && form.getAttribute('data-step') === '1') { e.preventDefault(); if (checkFirstStep()) goStep(2); }
+    });
+    on('[data-back]', 'click', function () { goStep(1); }, form);
+
+    async function send(withProfile) {
+      var first = checkFirstStep();
+      if (!first) { goStep(1); return; }
+      var error2 = $('[data-error2]', form);
+      error2.hidden = true;
+      var payload = first;
+      if (withProfile) {
+        var gender = values('gender')[0] || null, seeking = values('seeking'), sports = values('sports');
+        var any = gender || seeking.length || sports.length;
+        if (any && !form.profile_consent.checked) { error2.textContent = T.err_profile; error2.hidden = false; return; }
+        if (any) { payload.gender = gender; payload.seeking = seeking; payload.sports = sports; payload.profileConsent = true; }
+      }
+      var button = form.querySelector('button[type="submit"]');
+      setBusy(button, true);
+      lastSignup = payload;
+      try {
+        await signup(payload);
+        if (views.sent) {
+          $('[data-sent-text]', views.sent).textContent = T.sent_to(payload.email);
+          show('sent');
+          startResendTimer();
+          reveal(views.sent);
+          var heading = $('h2', views.sent);
+          if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
+        }
+        root.dispatchEvent(new CustomEvent('waitlist:sent', { bubbles: true }));
+      } catch (err) {
+        // El servidor solo rechaza datos del primer paso: se vuelve a él con el aviso.
+        goStep(1);
+        var error = $('[data-error]', form);
+        error.textContent = message(err);
+        error.hidden = false;
+      } finally {
+        setBusy(button, false);
+      }
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (form.getAttribute('data-step') === '1') { if (checkFirstStep()) goStep(2); return; }
+      send(true);
+    });
+    on('[data-skip]', 'click', function () { send(false); }, form);
+
+    function startResendTimer() {
+      if (!resend) return;
+      var left = 60;
+      resend.disabled = true;
+      var note = $('[data-sent-note]', root);
+      note.hidden = false;
+      note.textContent = T.resend_in(left);
+      clearInterval(startResendTimer.t);
+      startResendTimer.t = setInterval(function () {
+        left -= 1;
+        note.textContent = T.resend_in(left);
+        if (left <= 0) { clearInterval(startResendTimer.t); resend.disabled = false; note.hidden = true; }
+      }, 1000);
+    }
+    if (resend) {
+      resend.addEventListener('click', async function () {
+        if (!lastSignup) return;
+        setBusy(resend, true);
+        try { await signup(lastSignup); toast(T.resent); startResendTimer(); }
+        catch (err) { toast(message(err)); resend.disabled = false; }
+        finally { resend.setAttribute('aria-busy', 'false'); }
+      });
+    }
+    on('[data-change]', 'click', function () { show('form'); goStep(1); form.email.focus(); }, root);
+
+    return { form: form, views: views, show: show, goStep: goStep };
+  }
+
+  var lists = forms.map(Waitlist);
+  var main = lists[0];
+
   // ---------- Contador y ciudades ----------
 
   var citiesBuilt = false;
@@ -150,8 +271,8 @@
     }
     // Un contador con cuatro gatos resta más que suma: sale a partir de 50 personas.
     var showCounts = (data.total || 0) >= 50;
-    if ($('[data-counter]')) $('[data-counter]').hidden = !showCounts;
-    if (showCounts && $('[data-total]')) animate($('[data-total]'), data.total || 0);
+    $$('[data-counter]').forEach(function (el) { el.hidden = !showCounts; });
+    if (showCounts) $$('[data-total]').forEach(function (el) { animate(el, data.total || 0); });
     if (!citiesBuilt) buildCities(data.cities || [], data.launch_city);
     var list = $('[data-city-counts]');
     if (!list) return;
@@ -169,22 +290,23 @@
 
   // Madrid abre primero: va la primera, marcada por defecto y con su etiqueta.
   function buildCities(cities, launch) {
-    var box = $('[data-cities]');
     var wanted = (params.get('ciudad') || params.get('city') || '').toLowerCase() || launch || '';
-    cities.forEach(function (c) {
-      var label = document.createElement('label');
-      label.className = 'chip';
-      label.innerHTML = '<input type="radio" name="city" required><span></span>';
-      label.firstChild.value = c.slug;
-      label.lastChild.textContent = cityName(c);
-      if (c.slug === launch) {
-        var tag = document.createElement('small');
-        tag.className = 'launch';
-        tag.textContent = box.getAttribute('data-launch-tag');
-        label.lastChild.appendChild(tag);
-      }
-      if (c.slug === wanted) label.firstChild.checked = true;
-      box.appendChild(label);
+    $$('[data-cities]').forEach(function (box) {
+      cities.forEach(function (c) {
+        var label = document.createElement('label');
+        label.className = 'chip';
+        label.innerHTML = '<input type="radio" name="city" required><span></span>';
+        label.firstChild.value = c.slug;
+        label.lastChild.textContent = cityName(c);
+        if (c.slug === launch) {
+          var tag = document.createElement('small');
+          tag.className = 'launch';
+          tag.textContent = box.getAttribute('data-launch-tag');
+          label.lastChild.appendChild(tag);
+        }
+        if (c.slug === wanted) label.firstChild.checked = true;
+        box.appendChild(label);
+      });
     });
     citiesBuilt = true;
   }
@@ -194,108 +316,7 @@
     document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') fn(); });
   }
 
-  // ---------- Alta ----------
-
-  async function signup(payload) {
-    return api.rpc('waitlist_signup', {
-      p_email: payload.email, p_city: payload.city, p_locale: lang, p_ref: refCode || null,
-      p_consent: true, p_elapsed_ms: Date.now() - openedAt, p_website: payload.website || null,
-      p_gender: payload.gender || null, p_seeking: payload.seeking || null, p_sports: payload.sports || null,
-      p_profile_consent: !!payload.profileConsent
-    });
-  }
-
-  function setBusy(button, busy) {
-    button.disabled = busy;
-    button.setAttribute('aria-busy', busy ? 'true' : 'false');
-  }
-
-  function checkFirstStep() {
-    var error = $('[data-error]', form);
-    var email = form.email.value.trim();
-    var city = (form.querySelector('input[name="city"]:checked') || {}).value;
-    error.hidden = true;
-    form.email.removeAttribute('aria-invalid');
-    var fail = null;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { fail = T.err_email; form.email.setAttribute('aria-invalid', 'true'); }
-    else if (!city) fail = T.err_city;
-    else if (!form.consent.checked) fail = T.err_consent;
-    if (fail) { error.textContent = fail; error.hidden = false; return null; }
-    return { email: email, city: city, website: form.website.value };
-  }
-
-  on('[data-next]', 'click', function () { if (checkFirstStep()) goStep(2); });
-  form.email.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && form.getAttribute('data-step') === '1') { e.preventDefault(); if (checkFirstStep()) goStep(2); }
-  });
-  on('[data-back]', 'click', function () { goStep(1); });
-
-  async function send(withProfile) {
-    var first = checkFirstStep();
-    if (!first) { goStep(1); return; }
-    var error2 = $('[data-error2]', form);
-    error2.hidden = true;
-    var payload = first;
-    if (withProfile) {
-      var gender = values('gender')[0] || null, seeking = values('seeking'), sports = values('sports');
-      var any = gender || seeking.length || sports.length;
-      if (any && !form.profile_consent.checked) { error2.textContent = T.err_profile; error2.hidden = false; return; }
-      if (any) { payload.gender = gender; payload.seeking = seeking; payload.sports = sports; payload.profileConsent = true; }
-    }
-    var button = form.querySelector('button[type="submit"]');
-    setBusy(button, true);
-    lastSignup = payload;
-    try {
-      await signup(payload);
-      if (views.sent) {
-        $('[data-sent-text]').textContent = T.sent_to(payload.email);
-        show('sent');
-        startResendTimer();
-        views.sent.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-      }
-    } catch (err) {
-      // El servidor solo rechaza datos del primer paso: se vuelve a él con el aviso.
-      goStep(1);
-      var error = $('[data-error]', form);
-      error.textContent = message(err);
-      error.hidden = false;
-    } finally {
-      setBusy(button, false);
-    }
-  }
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (form.getAttribute('data-step') === '1') { if (checkFirstStep()) goStep(2); return; }
-    send(true);
-  });
-  on('[data-skip]', 'click', function () { send(false); });
-
-  var resend = $('[data-resend]');
-  function startResendTimer() {
-    if (!resend) return;
-    var left = 60;
-    resend.disabled = true;
-    var note = $('[data-sent-note]');
-    note.hidden = false;
-    note.textContent = T.resend_in(left);
-    clearInterval(startResendTimer.t);
-    startResendTimer.t = setInterval(function () {
-      left -= 1;
-      note.textContent = T.resend_in(left);
-      if (left <= 0) { clearInterval(startResendTimer.t); resend.disabled = false; note.hidden = true; }
-    }, 1000);
-  }
-  on('[data-resend]', 'click', async function () {
-    if (!lastSignup) return;
-    setBusy(resend, true);
-    try { await signup(lastSignup); toast(T.resent); startResendTimer(); }
-    catch (err) { toast(message(err)); resend.disabled = false; }
-    finally { resend.setAttribute('aria-busy', 'false'); }
-  });
-  on('[data-change]', 'click', function () { show('form'); goStep(1); form.email.focus(); });
-
-  // ---------- Estado ----------
+  // ---------- Estado (solo /lista/) ----------
 
   function renderStatus(d) {
     $('[data-city-name]').textContent = d.city_slug ? cityName({ slug: d.city_slug, name: d.city_name || '' }) : '';
@@ -319,7 +340,7 @@
     $('[data-whatsapp]').href = 'https://wa.me/?text=' + encodeURIComponent(T.share_msg + ' ' + link);
     $('[data-native]').hidden = !navigator.share;
     $('[data-stats]').textContent = d.referrals || d.points ? T.stats(d.referrals || 0, d.points || 0) : '';
-    show('status');
+    main.show('status');
   }
 
   on('[data-copy]', 'click', async function () {
@@ -337,53 +358,52 @@
     try { renderStatus(await api.rpc('waitlist_status', { p_token: statusToken })); } catch (e) { /* se reintenta */ }
   }
 
+  function linkError() {
+    main.show('form');
+    var error = $('[data-error]', main.form);
+    error.textContent = T.err_link;
+    error.hidden = false;
+  }
+
   async function start() {
     await loadCounts();
     poll(loadCounts, 20000);
     var confirm = params.get('confirmar') || params.get('confirm');
     var status = params.get('s');
-    if (confirm) {
-      show('status');
-      $('[data-confirming]').hidden = false;
-      try {
-        var d = await api.rpc('waitlist_confirm', { p_token: confirm });
-        statusToken = d.status_token;
-        history.replaceState(null, '', location.pathname + '?s=' + statusToken);
-        $('[data-confirming]').hidden = true;
-        var note = $('[data-status-note]');
-        note.textContent = T.confirmed;
-        note.hidden = false;
-        renderStatus(d);
-        poll(refreshStatus, 60000);
-      } catch (err) {
-        show('form');
-        var error = $('[data-error]', form);
-        error.textContent = T.err_link;
-        error.hidden = false;
+    if ((confirm || status) && main.views.status) {
+      if (confirm) {
+        main.show('status');
+        $('[data-confirming]').hidden = false;
+        try {
+          var d = await api.rpc('waitlist_confirm', { p_token: confirm });
+          statusToken = d.status_token;
+          history.replaceState(null, '', location.pathname + '?s=' + statusToken);
+          $('[data-confirming]').hidden = true;
+          var note = $('[data-status-note]');
+          note.textContent = T.confirmed;
+          note.hidden = false;
+          renderStatus(d);
+          poll(refreshStatus, 60000);
+        } catch (err) { linkError(); }
+        return;
       }
-      return;
-    }
-    if (status) {
       statusToken = status;
       try {
         renderStatus(await api.rpc('waitlist_status', { p_token: status }));
         poll(refreshStatus, 60000);
-      } catch (err) {
-        show('form');
-        var e2 = $('[data-error]', form);
-        e2.textContent = T.err_link;
-        e2.hidden = false;
-      }
+      } catch (err) { linkError(); }
       return;
     }
-    show('form');
+    lists.forEach(function (w) { w.show('form'); });
     if (refCode) {
       try {
         var r = await api.rpc('waitlist_referrer', { p_code: refCode });
         if (r && r.valid) {
-          $('[data-ref]').hidden = false;
-          var pick = form.querySelector('input[name="city"][value="' + r.city_slug + '"]');
-          if (pick && !form.querySelector('input[name="city"]:checked')) pick.checked = true;
+          lists.forEach(function (w) {
+            $('[data-ref]', w.form).hidden = false;
+            var pick = w.form.querySelector('input[name="city"][value="' + r.city_slug + '"]');
+            if (pick && !w.form.querySelector('input[name="city"]:checked')) pick.checked = true;
+          });
         }
       } catch (e) { /* sin aviso de referido */ }
     }

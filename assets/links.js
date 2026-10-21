@@ -145,7 +145,8 @@
     if (!code) { error(t.invalid); return; }
     // Para quien tenga la app: que el banner de Safari la abra con este enlace.
     var meta = document.querySelector('meta[name="apple-itunes-app"]');
-    if (meta) meta.setAttribute('content', 'app-id=0000000000, app-argument=' + location.origin + '/' + kind + '/' + code);
+    var appId = meta && (meta.getAttribute('content').match(/app-id=(\d+)/) || [])[1];
+    if (appId) meta.setAttribute('content', 'app-id=' + appId + ', app-argument=' + location.origin + '/' + kind + '/' + code);
 
     if (kind === 'e') {
       try {

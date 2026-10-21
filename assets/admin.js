@@ -10,7 +10,7 @@
   var dtf = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: '2-digit', hour: '2-digit', minute: '2-digit' });
   var TABS = [
     ['overview', 'Resumen'], ['config', 'Configuración'], ['cities', 'Ciudades'], ['waitlist', 'Lista de espera'],
-    ['ambassadors', 'Embajadores'], ['review', 'Revisión'], ['funnel', 'Embudo']
+    ['ambassadors', 'Embajadores'], ['denuncias', 'Denuncias'], ['review', 'Antifraude'], ['funnel', 'Embudo']
   ];
   var ERR = {
     INVALID: 'Valor no válido. Revisa el tipo y el rango.', NOT_ALLOWED: 'Esta cuenta no es admin.',
@@ -131,9 +131,12 @@
         kpi('Admitidos desde la lista', nf.format((w.admitted || 0) + (w.joined || 0))), kpi('Perfiles completos', nf.format(a.completed || 0)),
         kpi('Dentro de la app', nf.format(a.admitted || 0), true), kpi('Esperando en la app', nf.format(a.waiting || 0)),
         kpi('Validados', nf.format(a.validated || 0)), kpi('Pista+ activos', nf.format(a.premium || 0)),
-        kpi('Invitaciones esta semana', nf.format(o.invites_this_week || 0)), kpi('Por revisar', nf.format(o.open_flags || 0), o.open_flags > 0),
+        kpi('Denuncias abiertas', nf.format(o.open_reports || 0), o.open_reports > 0), kpi('Cuentas suspendidas', nf.format(a.suspended || 0)),
+        kpi('Invitaciones esta semana', nf.format(o.invites_this_week || 0)), kpi('Antifraude por revisar', nf.format(o.open_flags || 0), o.open_flags > 0),
         kpi('Comisiones pendientes', euros((o.commissions || {}).pending)), kpi('Comisiones aprobadas', euros((o.commissions || {}).approved))
       ]),
+      o.oldest_open_report && Date.now() - new Date(o.oldest_open_report).getTime() > 20 * 3600 * 1000
+        ? el('p', { class: 'notice error', text: 'Hay una denuncia de hace casi un día o más. Prometemos revisarlas en menos de 24 horas.' }) : null,
       o.emails_queued ? el('p', { class: 'notice info', text: o.emails_queued + ' correos en cola. Si no bajan, revisa RESEND_API_KEY y MAIL_FROM en Supabase.' }) : null
     ]));
   };
@@ -459,6 +462,58 @@
     ]));
     target.scrollIntoView({ behavior: 'smooth' });
   }
+
+  PANES.denuncias = async function () {
+    pane.innerHTML = '';
+    var status = el('select', { class: 'input', style: 'max-width:220px' }, [['open', 'Sin revisar'], ['reviewed', 'Con aviso'], ['actioned', 'Suspendidas'], ['dismissed', 'Descartadas']]
+      .map(function (o) { return el('option', { value: o[0], text: o[1] }); }));
+    var list = el('div', { class: 'stack' });
+    var REASONS = { fake: 'Perfil falso', inappropriate: 'Contenido inapropiado', harassment: 'Acoso', underage: 'Posible menor', spam: 'Spam', other: 'Otro' };
+    var WHERE = { discover: 'en Descubrir', likes: 'en Le gustas', chat: 'en el chat' };
+    async function load() {
+      var rows = await call('admin_reports', { p_status: status.value });
+      list.innerHTML = '';
+      if (!rows.length) { list.appendChild(el('p', { class: 'muted', text: 'Nada por aquí.' })); return; }
+      rows.forEach(function (r) {
+        var d = r.reported;
+        var who = !d ? el('p', { class: 'muted', text: 'La cuenta denunciada ya no existe.' }) : el('p', {}, [el('b', { text: 'Denunciada: ' }),
+          d.deleted ? 'cuenta borrada' : (d.name || 'sin nombre') + ' · ' + (d.city || '') + ' · alta ' + date(d.created_at) +
+          ' · ' + d.reports_total + (d.reports_total === 1 ? ' denuncia' : ' denuncias') + ' (' + d.reports_open + ' sin revisar) · la han bloqueado ' + d.blocked_by +
+          (d.blocked_by === 1 ? ' persona' : ' personas') + (d.phone_verified ? ' · móvil verificado' : ' · sin móvil')]);
+        var note = el('input', { class: 'input', placeholder: 'Nota (opcional, solo para el equipo)', style: 'max-width:340px' });
+        function act(action, label, cls, ask) {
+          return el('button', { class: 'btn small ' + (cls || ''), type: 'button', text: label, onclick: async function () {
+            if (ask && !confirm(ask)) return;
+            try { await call('admin_resolve_report', { p_id: r.id, p_action: action, p_note: note.value || null }); toast('Hecho'); load(); } catch (err) { fail(err); }
+          } });
+        }
+        var actions;
+        if (r.status === 'open') {
+          actions = el('div', { class: 'row' }, [note, act('dismiss', 'Descartar', 'ghost'), act('warn', 'Apuntar y vigilar', 'ghost'),
+            act('suspend', 'Suspender cuenta', 'danger', '¿Suspender esta cuenta? Deja de salir en la app y no puede escribir a nadie. Se puede deshacer.')]);
+        } else {
+          actions = el('p', { class: 'muted', text: ({ dismissed: 'Descartada', reviewed: 'Con aviso', actioned: 'Suspendida' }[r.status] || r.status) +
+            (r.resolved_by ? ' por ' + r.resolved_by : '') + (r.resolved_at ? ' el ' + date(r.resolved_at) : '') + (r.note ? ': ' + r.note : '') });
+        }
+        var lift = d && d.suspended_at ? el('button', { class: 'btn small ghost', type: 'button', text: 'Quitar la suspensión', onclick: async function () {
+          if (!confirm('¿Quitar la suspensión? Vuelve a salir en la app.')) return;
+          try { await call('admin_unsuspend', { p_user: d.id, p_note: note.value || null }); toast('Suspensión quitada'); load(); } catch (err) { fail(err); }
+        } }) : null;
+        list.appendChild(box(null, [
+          el('div', { class: 'row' }, [tag(REASONS[r.reason] || r.reason, r.reason === 'underage' || r.reason === 'harassment' ? 'warn' : ''),
+            el('span', { class: 'muted', text: date(r.created_at) + (WHERE[r.context] ? ' · ' + WHERE[r.context] : '') }),
+            d && d.suspended_at ? tag('suspendida', 'warn') : null]),
+          r.details ? el('p', { text: '«' + r.details + '»' }) : el('p', { class: 'muted', text: 'Sin comentario.' }),
+          who, r.reporter ? el('p', { class: 'muted', text: 'La envió ' + (r.reporter.name || 'alguien') + (r.reporter.deleted ? ' (cuenta borrada)' : '') }) : null,
+          actions, lift
+        ]));
+      });
+    }
+    status.onchange = load;
+    pane.appendChild(el('div', { class: 'stack' }, [el('div', { class: 'row' }, [status,
+      el('p', { class: 'muted', text: 'Quien denuncia ya ha bloqueado a esa persona. Suspender la saca de la app hasta que la quites; descartar o apuntar no le avisa de nada.' })]), list]));
+    await load();
+  };
 
   PANES.review = async function () {
     pane.innerHTML = '';

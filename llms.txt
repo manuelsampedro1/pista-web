@@ -1,6 +1,6 @@
 # Pista
 
-> Pista es una app de citas para iPhone pensada para gente que hace deporte. Cada perfil enseña sus deportes, su nivel y cuándo entrena, y cuando hay match se puede proponer una primera cita haciendo deporte. Empieza en España: Madrid, Barcelona y Valencia. Pista is an iPhone dating app for people who play sport, starting in Spain.
+> Pista es una app de citas para iPhone pensada para gente que hace deporte. Cada perfil enseña sus deportes, su nivel y cuándo entrena, y cuando hay match se puede proponer una primera cita haciendo deporte. Empieza en Madrid, con lista de espera; Barcelona y Valencia vendrán después. Pista is an iPhone dating app for people who play sport, starting in Spain.
 
 ## Qué es
 
@@ -11,7 +11,6 @@
 - Cuando hay match, desde el chat se propone una cita con deporte, sitio y hora.
 - En deportes de dobles (pádel, tenis, vóley playa, Hyrox Doubles) se puede marcar que buscas pareja.
 - Cada perfil puede llevar un enlace a su Strava. Pista no lee datos de Strava, solo enseña el botón para abrirlo.
-- Los 1.000 primeros perfiles completos de cada ciudad reciben un número de fundador.
 
 ## Precio
 
