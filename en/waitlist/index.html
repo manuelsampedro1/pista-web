@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Pista waitlist: join and get in sooner</title>
-<meta name="description" content="Pista opens in groups in Madrid, Barcelona and Valencia. Join the waitlist with your email, confirm it and share your link: every friend who confirms moves you both up 50 places.">
+<meta name="description" content="Pista opens in Madrid first, in groups, then Barcelona and Valencia. Join the waitlist with your email, confirm it and share your link: every friend who confirms moves you both up 50 places.">
 <link rel="canonical" href="https://pista.one/en/waitlist/">
 <link rel="alternate" hreflang="es" href="https://pista.one/lista/">
 <link rel="alternate" hreflang="en" href="https://pista.one/en/waitlist/">
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Pista">
 <meta property="og:locale" content="en_GB">
 <meta property="og:title" content="Pista waitlist: join and get in sooner">
-<meta property="og:description" content="Pista opens in groups in Madrid, Barcelona and Valencia. Join the waitlist with your email, confirm it and share your link: every friend who confirms moves you both up 50 places.">
+<meta property="og:description" content="Pista opens in Madrid first, in groups, then Barcelona and Valencia. Join the waitlist with your email, confirm it and share your link: every friend who confirms moves you both up 50 places.">
 <meta property="og:url" content="https://pista.one/en/waitlist/">
 <meta property="og:image" content="https://pista.one/assets/og-en.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -45,7 +45,7 @@
     <div>
       <p class="eyebrow">Waitlist</p>
       <h1 class="wl-title" id="wl-title" data-h1>Join the <em>waitlist</em>.</h1>
-      <p class="wl-lede" data-lede>Pista opens city by city, in groups, so there are real people near you when you get in. Leave your email and we&#x27;ll let you know.</p>
+      <p class="wl-lede" data-lede>We&#x27;re starting in Madrid, in groups, so there are real people near you when you get in. Barcelona and Valencia come next. Leave your email and we&#x27;ll let you know.</p>
       <div class="wl-counter" aria-live="polite" data-counter hidden>
         <span class="live" aria-hidden="true"></span>
         <span class="num" data-total>&nbsp;</span>
@@ -54,18 +54,35 @@
       <ul class="wl-cities" data-city-counts></ul>
     </div>
 
-    <form class="wl-card" data-view="form" novalidate>
-      <h2>Save your spot</h2>
-      <p class="wl-ref" data-ref hidden>Someone invited you. Join and you both move up.</p>
-      <label class="field"><span>Your email</span>
-        <input class="input" type="email" name="email" autocomplete="email" inputmode="email" required placeholder="name@email.com" maxlength="254">
-      </label>
-      <fieldset class="chips" data-cities><legend>Where do you train?</legend></fieldset>
-      <label class="hp" aria-hidden="true">Web<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-      <label class="check"><input type="checkbox" name="consent" required><span>I'm 18 or over and I've read the <a href="/en/privacy.html#waitlist">privacy policy</a>. You'll only email me to confirm my address and when my group opens.</span></label>
-      <p class="notice error" data-error role="alert" hidden></p>
-      <button class="btn block" type="submit">Save my spot <svg class="arrow" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <p class="small">Free and no spam: one email to confirm and another when it&#x27;s your turn.</p>
+    <form class="wl-card" data-view="form" data-step="1" novalidate>
+      <p class="wl-step" aria-live="polite" data-step-label data-template="Step {n} of 2">Step 1 of 2</p>
+      <div class="wl-pane" data-pane="1">
+        <h2>Save your spot</h2>
+        <p class="wl-ref" data-ref hidden>Someone invited you. Join and you both move up.</p>
+        <label class="field"><span>Your email</span>
+          <input class="input" type="email" name="email" autocomplete="email" inputmode="email" required placeholder="name@email.com" maxlength="254">
+        </label>
+        <fieldset class="chips" data-cities data-launch-tag="Opening first"><legend>Where do you train?</legend></fieldset>
+        <label class="hp" aria-hidden="true">Web<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        <label class="check"><input type="checkbox" name="consent" required><span>I'm 18 or over and I've read the <a href="/en/privacy.html#waitlist">privacy policy</a>. You'll only email me to confirm my address and when my group opens.</span></label>
+        <p class="notice error" data-error role="alert" hidden></p>
+        <button class="btn block" type="button" data-next>Continue <svg class="arrow" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <p class="small">Free and no spam: one email to confirm and another when it&#x27;s your turn.</p>
+      </div>
+      <div class="wl-pane" data-pane="2" hidden>
+        <h2>A bit about you</h2>
+        <p class="wl-lede-small">It helps us open balanced groups and email you about your sport. It&#x27;s optional.</p>
+        <fieldset class="chips" data-group="gender"><legend>I&#x27;m a</legend><label class="chip"><input type="radio" name="gender" value="woman"><span>Woman</span></label><label class="chip"><input type="radio" name="gender" value="man"><span>Man</span></label><label class="chip"><input type="radio" name="gender" value="nonbinary"><span>Non-binary</span></label></fieldset>
+        <fieldset class="chips" data-group="seeking"><legend>Looking for</legend><label class="chip"><input type="checkbox" name="seeking" value="woman"><span>Women</span></label><label class="chip"><input type="checkbox" name="seeking" value="man"><span>Men</span></label><label class="chip"><input type="checkbox" name="seeking" value="nonbinary"><span>Non-binary people</span></label></fieldset>
+        <fieldset class="chips" data-group="sports"><legend>My sports (up to 3)</legend><label class="chip"><input type="checkbox" name="sports" value="padel"><span>Padel</span></label><label class="chip"><input type="checkbox" name="sports" value="running"><span>Running</span></label><label class="chip"><input type="checkbox" name="sports" value="gym"><span>Gym</span></label><label class="chip"><input type="checkbox" name="sports" value="crossfit"><span>CrossFit</span></label><label class="chip"><input type="checkbox" name="sports" value="hyrox"><span>Hyrox</span></label><label class="chip"><input type="checkbox" name="sports" value="tennis"><span>Tennis</span></label><label class="chip"><input type="checkbox" name="sports" value="cycling"><span>Cycling</span></label><label class="chip"><input type="checkbox" name="sports" value="trail"><span>Trail</span></label><label class="chip"><input type="checkbox" name="sports" value="climbing"><span>Climbing</span></label><label class="chip"><input type="checkbox" name="sports" value="yoga"><span>Yoga</span></label><label class="chip"><input type="checkbox" name="sports" value="pilates"><span>Pilates</span></label><label class="chip"><input type="checkbox" name="sports" value="football"><span>Football</span></label><label class="chip"><input type="checkbox" name="sports" value="swimming"><span>Swimming</span></label><label class="chip"><input type="checkbox" name="sports" value="boxing"><span>Boxing</span></label><label class="chip"><input type="checkbox" name="sports" value="dance"><span>Dance</span></label></fieldset>
+        <label class="check"><input type="checkbox" name="profile_consent"><span>I agree to you using this (including who I'm looking for) to organise the groups. Only Pista uses it and I can ask you to delete it at any time. <a href="/en/privacy.html#waitlist">More info</a>.</span></label>
+        <p class="notice error" data-error2 role="alert" hidden></p>
+        <button class="btn block" type="submit">Save my spot <svg class="arrow" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="row wl-step-actions">
+          <button class="link-btn" type="button" data-back>Back</button>
+          <button class="link-btn" type="button" data-skip>I&#x27;d rather not say</button>
+        </div>
+      </div>
     </form>
 
     <div class="wl-card" data-view="sent" hidden>
@@ -108,14 +125,14 @@
 <section class="wl-steps" aria-labelledby="steps-title">
   <div class="wrap">
     <h2 id="steps-title">How you get in</h2>
-    <ol><li><div><h3>Join</h3><p>Your email and your city. Confirm with one click and you&#x27;ve got a place.</p></div></li><li><div><h3>Share your link</h3><p>Every friend who confirms moves you both up 50 places. No limit.</p></div></li><li><div><h3>You&#x27;re up</h3><p>We open in groups. You&#x27;ll get an email with your code and go straight into the app.</p></div></li></ol>
+    <ol><li><div><h3>Join</h3><p>Your email, your city and, if you like, your sport. Confirm with one click and you&#x27;ve got a place.</p></div></li><li><div><h3>Share your link</h3><p>Every friend who confirms moves you both up 50 places. No limit.</p></div></li><li><div><h3>You&#x27;re up</h3><p>We open in groups. You&#x27;ll get an email with your code and go straight into the app.</p></div></li></ol>
   </div>
 </section>
 
 <section class="wl-faq" aria-labelledby="faq-title">
   <div class="wrap faq-wrap">
     <h2 id="faq-title">Questions</h2>
-    <div><details><summary>Why a waitlist?</summary><p>An empty dating app is no use to anyone. We open city by city and in groups, so there are people near you and at your level when you get in.</p></details><details><summary>When is my turn?</summary><p>It depends on your city and your place. The first in each group get in first, and sharing your link moves you up.</p></details><details><summary>Can I skip the wait?</summary><p>Yes. With an invite from someone already inside, or the code of a Pista ambassador, you go straight in.</p></details><details><summary>What do you do with my email?</summary><p>We use it to confirm your spot and tell you when it&#x27;s your turn. We don&#x27;t sell it or use it for advertising. The details are in the privacy policy.</p></details></div>
+    <div><details><summary>Why a waitlist?</summary><p>An empty dating app is no use to anyone. We open city by city and in groups, so there are people near you and at your level when you get in.</p></details><details><summary>When is my turn?</summary><p>We&#x27;re starting with Madrid. It depends on your city and your place: the first in each group get in first, and sharing your link moves you up.</p></details><details><summary>Can I skip the wait?</summary><p>Yes. With an invite from someone already inside, or the code of a Pista ambassador, you go straight in.</p></details><details><summary>What do you do with my email?</summary><p>We use it to confirm your spot and tell you when it&#x27;s your turn. We don&#x27;t sell it or use it for advertising. The details are in the privacy policy.</p></details><details><summary>Why do you ask if I&#x27;m a man or a woman?</summary><p>To open balanced groups: a dating app that&#x27;s almost all guys doesn&#x27;t work for anyone. It&#x27;s optional and we only use it for that.</p></details></div>
   </div>
 </section>
 </main>

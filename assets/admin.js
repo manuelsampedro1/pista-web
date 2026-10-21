@@ -204,29 +204,47 @@
     dialog.showModal();
   }
 
+  var GENDERS = { woman: 'mujeres', man: 'hombres', nonbinary: 'no binarias', unknown: 'sin dato' };
+  var GENDER_ONE = { woman: 'mujer', man: 'hombre', nonbinary: 'no binario' };
+  function mix(obj, names) {
+    var keys = Object.keys(obj || {});
+    if (!keys.length) return '';
+    return keys.sort(function (a, b) { return obj[b] - obj[a]; })
+      .map(function (k) { return nf.format(obj[k]) + ' ' + (names ? names[k] || k : k); }).join(' · ');
+  }
+
   PANES.cities = async function () {
     var rows = await call('admin_cities');
     pane.innerHTML = '';
     var preview = el('div');
     var t = table([
-      { label: 'Ciudad', render: function (r) { return el('span', {}, [r.name + ' ', tag(r.status === 'open' ? 'abierta' : 'lista', r.status === 'open' ? 'ok' : '')]); } },
+      { label: 'Ciudad', render: function (r) { return el('span', {}, [r.name + ' ', tag(r.status === 'open' ? 'abierta' : 'lista', r.status === 'open' ? 'ok' : ''),
+          r.launch_order ? tag('abre ' + r.launch_order + 'ª', 'warn') : '']); } },
       { label: 'Sin confirmar', key: 'pending', num: true }, { label: 'Esperando', key: 'waiting', num: true },
       { label: 'De ellos en la app', key: 'waiting_in_app', num: true }, { label: 'Con código', key: 'admitted', num: true },
       { label: 'Ya dentro', key: 'joined', num: true }, { label: 'Cuentas', key: 'accounts', num: true },
+      { label: 'Quién espera', render: function (r) {
+        return el('div', { class: 'muted', style: 'font-size:13px;line-height:1.4;max-width:220px' }, [
+          el('div', { text: mix(r.waiting_gender, GENDERS) }), el('div', { text: mix(r.waiting_sports) })]); } },
       { label: 'Tanda', render: function (r) {
         var n = el('input', { class: 'input', type: 'number', min: 1, max: 5000, value: 50, style: 'width:90px;height:40px' });
+        var bal = el('input', { type: 'checkbox', checked: true });
         return el('div', { class: 'row' }, [n,
+          el('label', { class: 'check', style: 'grid-template-columns:22px auto;font-size:13px', title: 'Alterna mujeres, hombres y el resto para que la tanda salga equilibrada' },
+            [bal, el('span', { text: 'Equilibrar' })]),
           el('button', { class: 'btn small ghost', type: 'button', text: 'Ver', onclick: async function () {
-            var list = await call('admin_batch_preview', { p_city: r.slug, p_count: Number(n.value) });
+            var list = await call('admin_batch_preview', { p_city: r.slug, p_count: Number(n.value), p_balance: bal.checked });
             preview.innerHTML = '';
             preview.appendChild(box('Próxima tanda en ' + r.name + ' (' + list.length + ')', [table([
               { label: '#', key: 'position', num: true }, { label: 'Correo', render: function (x) { return x.email || 'Cuenta de la app'; } },
+              { label: 'Género', render: function (x) { return GENDER_ONE[x.gender] || ''; } },
+              { label: 'Deportes', render: function (x) { return (x.sports || []).join(', '); } },
               { label: 'Puntos', key: 'points', num: true }, { label: 'Desde', render: function (x) { return date(x.created_at); } }
             ], list)]));
           } }),
           el('button', { class: 'btn small', type: 'button', text: 'Admitir', onclick: async function () {
-            if (!confirm('¿Admitir a los ' + n.value + ' primeros de ' + r.name + '? Les llega el correo con su código.')) return;
-            try { var res = await call('admin_admit_batch', { p_city: r.slug, p_count: Number(n.value) }); toast(res.admitted + ' admitidos'); open(); } catch (err) { fail(err); }
+            if (!confirm('¿Admitir a ' + n.value + ' personas de ' + r.name + (bal.checked ? ', equilibrando por género' : ', por orden de la lista') + '? Les llega el correo con su código.')) return;
+            try { var res = await call('admin_admit_batch', { p_city: r.slug, p_count: Number(n.value), p_balance: bal.checked }); toast(res.admitted + ' admitidos'); open(); } catch (err) { fail(err); }
           } })]);
       } },
       { label: '', render: function (r) {
@@ -272,6 +290,10 @@
       results.appendChild(el('p', { class: 'muted', text: nf.format(data.total) + ' en total' }));
       results.appendChild(table([
         { label: 'Correo', render: function (r) { return r.email || 'Cuenta de la app'; } }, { label: 'Ciudad', key: 'city' },
+        { label: 'Perfil', render: function (r) {
+          var bits = [GENDER_ONE[r.gender], (r.seeking || []).length ? 'busca ' + r.seeking.map(function (g) { return GENDERS[g]; }).join(' y ') : '', (r.sports || []).join(', ')];
+          return el('span', { class: 'muted', style: 'font-size:13px', text: bits.filter(Boolean).join(' · ') });
+        } },
         { label: 'Estado', render: function (r) { return tag(r.status, r.status === 'joined' ? 'ok' : r.status === 'pending' ? '' : 'warn'); } },
         { label: 'Puesto', key: 'position', num: true }, { label: 'Puntos', key: 'points', num: true }, { label: 'Ha traído', key: 'referrals', num: true },
         { label: 'Alta', render: function (r) { return date(r.created_at); } },
@@ -292,7 +314,7 @@
         try {
           var rows = await call('admin_waitlist_export', { p_city: state.city, p_status: state.status });
           api.download('pista-lista-' + new Date().toISOString().slice(0, 10) + '.csv', api.csv(rows,
-            ['email', 'city', 'locale', 'status', 'position', 'points', 'referred', 'referrals', 'created_at', 'consent_at', 'confirmed_at', 'admitted_at', 'joined_at']));
+            ['email', 'city', 'locale', 'status', 'position', 'points', 'gender', 'seeking', 'sports', 'referred', 'referrals', 'created_at', 'consent_at', 'profile_consent_at', 'confirmed_at', 'admitted_at', 'joined_at']));
         } catch (err) { fail(err); }
       } })]);
     filters.onsubmit = function (e) {

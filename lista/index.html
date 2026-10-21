@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lista de espera de Pista: apúntate y entra antes</title>
-<meta name="description" content="Pista abre por tandas en Madrid, Barcelona y Valencia. Apúntate a la lista con tu correo, confirma y comparte tu enlace: cada amigo que confirme os sube 50 puestos a los dos.">
+<meta name="description" content="Pista abre primero en Madrid, por tandas, y luego en Barcelona y Valencia. Apúntate a la lista con tu correo, confirma y comparte tu enlace: cada amigo que confirme os sube 50 puestos a los dos.">
 <link rel="canonical" href="https://pista.one/lista/">
 <link rel="alternate" hreflang="es" href="https://pista.one/lista/">
 <link rel="alternate" hreflang="en" href="https://pista.one/en/waitlist/">
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Pista">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="Lista de espera de Pista: apúntate y entra antes">
-<meta property="og:description" content="Pista abre por tandas en Madrid, Barcelona y Valencia. Apúntate a la lista con tu correo, confirma y comparte tu enlace: cada amigo que confirme os sube 50 puestos a los dos.">
+<meta property="og:description" content="Pista abre primero en Madrid, por tandas, y luego en Barcelona y Valencia. Apúntate a la lista con tu correo, confirma y comparte tu enlace: cada amigo que confirme os sube 50 puestos a los dos.">
 <meta property="og:url" content="https://pista.one/lista/">
 <meta property="og:image" content="https://pista.one/assets/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -45,7 +45,7 @@
     <div>
       <p class="eyebrow">Lista de espera</p>
       <h1 class="wl-title" id="wl-title" data-h1>Apúntate a la <em>lista</em>.</h1>
-      <p class="wl-lede" data-lede>Pista abre por tandas y por ciudades, para que cuando entres haya gente de verdad cerca. Déjanos tu correo y te avisamos.</p>
+      <p class="wl-lede" data-lede>Empezamos en Madrid, por tandas, para que cuando entres haya gente de verdad cerca. Barcelona y Valencia, después. Déjanos tu correo y te avisamos.</p>
       <div class="wl-counter" aria-live="polite" data-counter hidden>
         <span class="live" aria-hidden="true"></span>
         <span class="num" data-total>&nbsp;</span>
@@ -54,18 +54,35 @@
       <ul class="wl-cities" data-city-counts></ul>
     </div>
 
-    <form class="wl-card" data-view="form" novalidate>
-      <h2>Guarda tu sitio</h2>
-      <p class="wl-ref" data-ref hidden>Te ha invitado alguien. Apúntate y subís puestos los dos.</p>
-      <label class="field"><span>Tu correo</span>
-        <input class="input" type="email" name="email" autocomplete="email" inputmode="email" required placeholder="nombre@correo.com" maxlength="254">
-      </label>
-      <fieldset class="chips" data-cities><legend>¿Dónde entrenas?</legend></fieldset>
-      <label class="hp" aria-hidden="true">Web<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-      <label class="check"><input type="checkbox" name="consent" required><span>Tengo 18 años o más y he leído la <a href="/privacidad.html#lista">política de privacidad</a>. Solo me escribiréis para confirmar el correo y avisarme de mi tanda.</span></label>
-      <p class="notice error" data-error role="alert" hidden></p>
-      <button class="btn block" type="submit">Guardar mi sitio <svg class="arrow" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <p class="small">Gratis y sin spam: un correo para confirmar y otro cuando te toque.</p>
+    <form class="wl-card" data-view="form" data-step="1" novalidate>
+      <p class="wl-step" aria-live="polite" data-step-label data-template="Paso {n} de 2">Paso 1 de 2</p>
+      <div class="wl-pane" data-pane="1">
+        <h2>Guarda tu sitio</h2>
+        <p class="wl-ref" data-ref hidden>Te ha invitado alguien. Apúntate y subís puestos los dos.</p>
+        <label class="field"><span>Tu correo</span>
+          <input class="input" type="email" name="email" autocomplete="email" inputmode="email" required placeholder="nombre@correo.com" maxlength="254">
+        </label>
+        <fieldset class="chips" data-cities data-launch-tag="Abrimos primero"><legend>¿Dónde entrenas?</legend></fieldset>
+        <label class="hp" aria-hidden="true">Web<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        <label class="check"><input type="checkbox" name="consent" required><span>Tengo 18 años o más y he leído la <a href="/privacidad.html#lista">política de privacidad</a>. Solo me escribiréis para confirmar el correo y avisarme de mi tanda.</span></label>
+        <p class="notice error" data-error role="alert" hidden></p>
+        <button class="btn block" type="button" data-next>Seguir <svg class="arrow" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <p class="small">Gratis y sin spam: un correo para confirmar y otro cuando te toque.</p>
+      </div>
+      <div class="wl-pane" data-pane="2" hidden>
+        <h2>Un poco de ti</h2>
+        <p class="wl-lede-small">Con esto abrimos tandas equilibradas y te escribimos de lo tuyo. Es opcional.</p>
+        <fieldset class="chips" data-group="gender"><legend>Soy</legend><label class="chip"><input type="radio" name="gender" value="woman"><span>Mujer</span></label><label class="chip"><input type="radio" name="gender" value="man"><span>Hombre</span></label><label class="chip"><input type="radio" name="gender" value="nonbinary"><span>No binario</span></label></fieldset>
+        <fieldset class="chips" data-group="seeking"><legend>Busco</legend><label class="chip"><input type="checkbox" name="seeking" value="woman"><span>Mujeres</span></label><label class="chip"><input type="checkbox" name="seeking" value="man"><span>Hombres</span></label><label class="chip"><input type="checkbox" name="seeking" value="nonbinary"><span>Personas no binarias</span></label></fieldset>
+        <fieldset class="chips" data-group="sports"><legend>Mis deportes (hasta 3)</legend><label class="chip"><input type="checkbox" name="sports" value="padel"><span>Pádel</span></label><label class="chip"><input type="checkbox" name="sports" value="running"><span>Running</span></label><label class="chip"><input type="checkbox" name="sports" value="gym"><span>Gimnasio</span></label><label class="chip"><input type="checkbox" name="sports" value="crossfit"><span>CrossFit</span></label><label class="chip"><input type="checkbox" name="sports" value="hyrox"><span>Hyrox</span></label><label class="chip"><input type="checkbox" name="sports" value="tennis"><span>Tenis</span></label><label class="chip"><input type="checkbox" name="sports" value="cycling"><span>Ciclismo</span></label><label class="chip"><input type="checkbox" name="sports" value="trail"><span>Trail</span></label><label class="chip"><input type="checkbox" name="sports" value="climbing"><span>Escalada</span></label><label class="chip"><input type="checkbox" name="sports" value="yoga"><span>Yoga</span></label><label class="chip"><input type="checkbox" name="sports" value="pilates"><span>Pilates</span></label><label class="chip"><input type="checkbox" name="sports" value="football"><span>Fútbol</span></label><label class="chip"><input type="checkbox" name="sports" value="swimming"><span>Natación</span></label><label class="chip"><input type="checkbox" name="sports" value="boxing"><span>Boxeo</span></label><label class="chip"><input type="checkbox" name="sports" value="dance"><span>Baile</span></label></fieldset>
+        <label class="check"><input type="checkbox" name="profile_consent"><span>Acepto que uséis estos datos (incluido a quién busco) para organizar las tandas. Solo los usa Pista y puedo pedir que los borréis cuando quiera. <a href="/privacidad.html#lista">Más información</a>.</span></label>
+        <p class="notice error" data-error2 role="alert" hidden></p>
+        <button class="btn block" type="submit">Guardar mi sitio <svg class="arrow" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="row wl-step-actions">
+          <button class="link-btn" type="button" data-back>Atrás</button>
+          <button class="link-btn" type="button" data-skip>Prefiero no decirlo</button>
+        </div>
+      </div>
     </form>
 
     <div class="wl-card" data-view="sent" hidden>
@@ -108,14 +125,14 @@
 <section class="wl-steps" aria-labelledby="steps-title">
   <div class="wrap">
     <h2 id="steps-title">Así se entra</h2>
-    <ol><li><div><h3>Apúntate</h3><p>Tu correo y tu ciudad. Confirmas con un clic y ya tienes puesto.</p></div></li><li><div><h3>Comparte tu enlace</h3><p>Cada amigo que confirme os sube 50 puestos a los dos. Sin límite.</p></div></li><li><div><h3>Te toca</h3><p>Abrimos por tandas. Te llega un correo con tu código y entras en la app directo.</p></div></li></ol>
+    <ol><li><div><h3>Apúntate</h3><p>Tu correo, tu ciudad y, si quieres, tu deporte. Confirmas con un clic y ya tienes puesto.</p></div></li><li><div><h3>Comparte tu enlace</h3><p>Cada amigo que confirme os sube 50 puestos a los dos. Sin límite.</p></div></li><li><div><h3>Te toca</h3><p>Abrimos por tandas. Te llega un correo con tu código y entras en la app directo.</p></div></li></ol>
   </div>
 </section>
 
 <section class="wl-faq" aria-labelledby="faq-title">
   <div class="wrap faq-wrap">
     <h2 id="faq-title">Preguntas</h2>
-    <div><details><summary>¿Por qué una lista de espera?</summary><p>Una app de citas vacía no sirve a nadie. Abrimos ciudad a ciudad y por tandas, para que cuando entres haya gente de tu zona y de tu nivel.</p></details><details><summary>¿Cuándo me toca?</summary><p>Depende de tu ciudad y de tu puesto. Los primeros de cada tanda entran antes, y compartir tu enlace te adelanta.</p></details><details><summary>¿Puedo entrar sin esperar?</summary><p>Sí. Con la invitación de alguien que ya está dentro, o con el código de un embajador de Pista, entras directo.</p></details><details><summary>¿Qué hacéis con mi correo?</summary><p>Lo usamos para confirmar tu sitio y avisarte cuando te toque. No lo vendemos ni lo usamos para publicidad. Los detalles están en la política de privacidad.</p></details></div>
+    <div><details><summary>¿Por qué una lista de espera?</summary><p>Una app de citas vacía no sirve a nadie. Abrimos ciudad a ciudad y por tandas, para que cuando entres haya gente de tu zona y de tu nivel.</p></details><details><summary>¿Cuándo me toca?</summary><p>Empezamos por Madrid. Depende de tu ciudad y de tu puesto: los primeros de cada tanda entran antes, y compartir tu enlace te adelanta.</p></details><details><summary>¿Puedo entrar sin esperar?</summary><p>Sí. Con la invitación de alguien que ya está dentro, o con el código de un embajador de Pista, entras directo.</p></details><details><summary>¿Qué hacéis con mi correo?</summary><p>Lo usamos para confirmar tu sitio y avisarte cuando te toque. No lo vendemos ni lo usamos para publicidad. Los detalles están en la política de privacidad.</p></details><details><summary>¿Para qué queréis saber si soy hombre o mujer?</summary><p>Para abrir tandas equilibradas: una app de citas donde casi todo son chicos no funciona para nadie. Es opcional y solo lo usamos para eso.</p></details></div>
   </div>
 </section>
 </main>
