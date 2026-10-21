@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lista de espera de Pista: apúntate y entra antes</title>
-<meta name="description" content="Pista abre primero en Madrid, por tandas, y luego en Barcelona y Valencia. Apúntate a la lista con tu correo, confirma y comparte tu enlace: cada amigo que confirme os sube 50 puestos a los dos.">
+<meta name="description" content="Pista, la app de citas para gente que hace deporte, abre Madrid por tandas. Apúntate a la lista con tu nombre y tu correo, confirma y comparte tu enlace: cada amigo que confirme os sube 50 puestos a los dos.">
 <link rel="canonical" href="https://pista.one/lista/">
 <link rel="alternate" hreflang="es" href="https://pista.one/lista/">
 <link rel="alternate" hreflang="en" href="https://pista.one/en/waitlist/">
-<meta name="theme-color" content="#143F31">
+<meta name="theme-color" content="#0E2A21">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -16,126 +16,123 @@
 <meta property="og:site_name" content="Pista">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="Lista de espera de Pista: apúntate y entra antes">
-<meta property="og:description" content="Pista abre primero en Madrid, por tandas, y luego en Barcelona y Valencia. Apúntate a la lista con tu correo, confirma y comparte tu enlace: cada amigo que confirme os sube 50 puestos a los dos.">
+<meta property="og:description" content="Pista, la app de citas para gente que hace deporte, abre Madrid por tandas. Apúntate a la lista con tu nombre y tu correo, confirma y comparte tu enlace: cada amigo que confirme os sube 50 puestos a los dos.">
 <meta property="og:url" content="https://pista.one/lista/">
 <meta property="og:image" content="https://pista.one/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" href="/assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/newsreader-voice.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/nr-display.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/nr-display-it.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/DMSans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="/assets/waitlist.css">
 <script>document.documentElement.classList.add('js')</script>
-<script src="/config.js" defer></script>
-<script src="/assets/api.js" defer></script>
-<script src="/assets/doc.js" defer></script><script src="/assets/waitlist.js" defer></script>
 </head>
-<body class="page-public">
+<body class="page-public lista-page">
 <a class="skip" href="#main">Saltar al contenido</a>
-<header class="hd on-court" data-header>
+<header class="hd" data-header data-theme="dark">
   <div class="wrap hd-in">
     <a class="hd-brand" href="/" aria-label="Pista, inicio"><svg class="wm" viewBox="-9.9 -81.3 182.5 102.8" aria-hidden="true" focusable="false"><path d="M-7.6 20.5Q-8.9 20.5 -8.9 19.4Q-8.9 18.4 -7.3 18.2L-5.9 18Q-3.9 17.7 -3 16.9Q-2 16 -1.5 13.8L11.8 -43.6Q12 -44.4 11.6 -44.9Q11.1 -45.3 10.3 -44.8Q9.3 -44.3 8.4 -43.8Q7.5 -43.2 6.6 -42.6Q5.7 -42 5.1 -42.2Q4.5 -42.5 4.5 -43.2Q4.5 -43.9 5.5 -44.6Q8.3 -46.5 11.3 -47.9Q13 -48.7 13.4 -50.5L14.7 -56.2Q15.2 -58.3 17.3 -58.3L19.1 -58.3Q20.3 -58.3 20.9 -57.6Q21.5 -56.9 21.2 -55.6L20.5 -52.7Q20.2 -51 21.8 -51.3Q24.1 -51.6 26.2 -51.6Q33.6 -51.6 38.3 -47.4Q43 -43.2 43 -34.5Q43 -27.7 40.5 -21.4Q38 -15 33.9 -10Q29.8 -5 24.9 -2.1Q20 0.9 15.1 0.9Q12.4 0.9 10 -0.2Q8.5 -0.9 8.2 0.6L5.2 13.8Q4.7 16 5.2 16.7Q5.8 17.4 7.7 17.7L10.3 18.1Q12.1 18.4 12.1 19.3Q12.1 20.5 10.4 20.5ZM11 -11.5Q9.2 -1.6 15.3 -1.6Q18.8 -1.6 22.4 -4.5Q26 -7.5 29.1 -12.5Q32.2 -17.4 34.1 -23.6Q36 -29.8 36 -36.3Q36 -43 33.1 -46Q30.2 -48.9 24.6 -48.9Q19.6 -48.9 18.9 -45.5ZM56 1Q52.7 1 51.3 -1.5Q49.9 -3.9 51.2 -9.5L58.6 -41.2Q59.1 -43.4 58.8 -44.7Q58.4 -45.9 56.9 -45.9Q55.1 -45.9 52.9 -43.2Q50.8 -40.6 48.1 -33.2Q47.7 -31.9 46.7 -31.9Q45.2 -31.9 45.9 -33.7Q48.1 -40.6 50.5 -44.5Q53 -48.4 55.5 -50Q58 -51.6 60.1 -51.6Q63.6 -51.6 65 -49.2Q66.4 -46.7 65.1 -41.1L57.7 -9.4Q57.2 -7.2 57.5 -6Q57.9 -4.7 59.4 -4.7Q61.2 -4.7 63.3 -7.4Q65.5 -10 68.2 -17.4Q68.6 -18.7 69.6 -18.7Q71.1 -18.7 70.4 -16.9Q68.3 -10.1 65.8 -6.2Q63.2 -2.2 60.7 -0.6Q58.2 1 56 1ZM83 0.9Q79.7 0.9 76.1 -0.1Q72.4 -1.1 70.5 -2.6Q69.8 -3.2 69.9 -4.4L72.1 -17.5Q72.3 -18.8 73.3 -18.8Q74.4 -18.8 74.4 -17.4L74.6 -12.6Q74.8 -6.9 77.4 -4.2Q79.9 -1.6 83.6 -1.6Q86.8 -1.6 89.1 -3.7Q91.4 -5.7 91.4 -9.7Q91.4 -12 90.7 -14Q90 -15.9 88.5 -18.2Q87 -20.4 84.4 -23.6Q81 -28 79.4 -31.2Q77.7 -34.3 77.7 -37.7Q77.7 -44 81.7 -47.8Q85.6 -51.6 91.7 -51.6Q94.4 -51.6 97 -50.8Q99.5 -50 101.2 -48.4Q102.1 -47.7 101.8 -46.6L99 -33.2Q98.7 -31.9 97.8 -31.9Q96.9 -31.9 96.7 -33.3L96.4 -38.1Q96 -44.1 94.9 -46.7Q93.7 -49.3 90.1 -49.3Q86.9 -49.3 84.9 -47.1Q82.9 -44.9 82.9 -41.8Q82.9 -38.5 84.7 -35.8Q86.5 -33 89.6 -28.8Q93.7 -23.4 95.2 -20.2Q96.6 -17 96.6 -13.7Q96.6 -9.5 94.8 -6.2Q92.9 -2.9 89.8 -1Q86.7 0.9 83 0.9ZM110.6 0.9Q107.2 0.9 105.3 -1.8Q103.4 -4.5 104.7 -10.5L113 -46.7Q113.3 -48.2 111.8 -48.2L108 -48.2Q106.6 -48.2 106.6 -49.5Q106.6 -50.2 107.1 -50.6Q107.6 -51 108.3 -51L111.9 -51Q114.2 -51 114.6 -53.1L117 -63.8Q117.3 -64.9 118.4 -64.9L122.5 -64.9Q123.9 -64.9 123.6 -63.6L121.1 -52.5Q120.8 -51 122.3 -51L128 -51Q129.7 -51 129.7 -49.7Q129.7 -48.2 127.6 -48.2L122.2 -48.2Q120 -48.2 119.5 -46.1L111.1 -9.5Q110.6 -7.3 111.2 -6.1Q111.9 -4.8 113.5 -4.8Q115.8 -4.8 117.8 -7.4Q119.7 -10 121.9 -17.3Q122.3 -18.6 123.2 -18.6Q123.9 -18.6 124.1 -18Q124.3 -17.4 123.8 -15.8Q121.9 -9 119.7 -5.4Q117.4 -1.8 115.1 -0.5Q112.8 0.9 110.6 0.9ZM135.3 0.9Q131.7 0.9 129.7 -2.2Q127.7 -5.3 127.7 -11.3Q127.7 -17 129.3 -22.8Q130.9 -28.5 133.7 -33.7Q136.5 -38.9 140.1 -42.9Q143.6 -46.9 147.6 -49.2Q151.5 -51.6 155.4 -51.6Q157.3 -51.6 159 -50.9Q160.7 -50.1 161.8 -48.5Q162.4 -47.6 163 -47.6Q163.6 -47.6 164.2 -48.5Q165.3 -50.1 166 -50.6Q166.7 -51 167.3 -51Q168.6 -51 168.3 -49.6L159.4 -11.3Q157.9 -4.8 161.4 -4.8Q163.7 -4.8 165.6 -7.9Q167.4 -11 169.3 -17.5Q169.6 -18.6 170.6 -18.6Q171.3 -18.6 171.5 -18Q171.7 -17.4 171.5 -16.6Q169.6 -7.2 166.4 -3.2Q163.2 0.9 158.7 0.9Q154.8 0.9 153.2 -2.4Q151.5 -5.7 152.8 -11.4L154.1 -16.9Q154.3 -17.6 153.9 -17.7Q153.4 -17.8 153.1 -17.2Q147.6 -7.1 143.3 -3.1Q139.1 0.9 135.3 0.9ZM137.8 -4.2Q140.2 -4.2 143.1 -7.1Q146 -10 148.9 -14.6Q151.7 -19.2 154.1 -24.5Q156.5 -29.8 158 -34.7Q159.4 -39.6 159.4 -43Q159.4 -49.1 155.1 -49.1Q152.5 -49.1 149.6 -46.8Q146.7 -44.4 144.1 -40.4Q141.4 -36.4 139.2 -31.4Q137.1 -26.3 135.8 -20.9Q134.5 -15.4 134.5 -10.2Q134.5 -6.7 135.3 -5.5Q136.2 -4.2 137.8 -4.2Z" fill="currentColor"/><g class="wm-ball" transform="rotate(-18 62.8 -71.4)"><circle cx="62.8" cy="-71.4" r="8.1" fill="#D7F24B"/><path d="M57.1 -77.2A7.5 7.5 0 0 1 57.1 -65.6M68.5 -77.2A7.5 7.5 0 0 0 68.5 -65.6" fill="none" stroke="#143F31" stroke-width="0.9"/></g></svg></a>
-    <p class="hd-meta"><span class="live" aria-hidden="true"></span>Lista abierta en Madrid</p>
-    <nav class="hd-nav" aria-label="Principal"><a href="/#como-funciona">Cómo funciona</a><a href="/#deportes">Deportes</a><a href="/#preguntas">Preguntas</a></nav>
+    <nav class="hd-nav" aria-label="Principal"><a href="/#como-funciona">Cómo funciona</a><a href="/#citas">Citas</a><a href="/#seguridad">Seguridad</a><a href="/#preguntas">Preguntas</a></nav>
     <div class="hd-act">
-      <a class="hd-lang" href="/en/waitlist/" hreflang="en" lang="en" aria-label="English version">EN</a>
-      <a class="pill" href="/#lista" data-to-form>Apúntate</a>
+      <a class="hd-lang" href="/en/waitlist/" hreflang="en" lang="en" aria-label="EN, English version">EN</a>
+      <a class="pill" href="/lista/">Apúntate</a>
     </div>
   </div>
 </header>
 <main id="main">
-<section class="wl-hero" aria-labelledby="wl-title">
-  <svg class="court" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true"><path d="M40 30H960V970H40Z"/><path d="M40 500H960"/><path d="M40 245H960M40 755H960"/><path d="M500 245V755"/></svg>
-  <div class="wrap wl-grid">
-    <div>
-      <p class="eyebrow">Lista de espera</p>
-      <h1 class="wl-title" id="wl-title" data-h1>Apúntate a la <em>lista</em>.</h1>
-      <p class="wl-lede" data-lede>Empezamos en Madrid, por tandas, para que cuando entres haya gente de verdad cerca. Barcelona y Valencia, después. Déjanos tu correo y te avisamos.</p>
-      <div class="wl-counter" aria-live="polite" data-counter hidden>
-        <span class="live" aria-hidden="true"></span>
-        <span class="num" data-total>&nbsp;</span>
-        <span class="label">personas ya esperan</span>
-      </div>
-      <ul class="wl-cities" data-city-counts></ul>
+<section class="lista" aria-labelledby="lista-title">
+  <div class="wrap lista-grid">
+    <div class="lista-copy">
+      <p class="kick">Lista de espera</p>
+      <h1 class="lista-h1" id="lista-title"><span data-status-hide>Guárdate el <em>sitio</em>.</span><span data-status-show hidden>Ya tienes <em>sitio</em>.</span></h1>
+      <p class="lista-lede" data-status-hide>Pista es la app de citas para gente que hace deporte. Abrimos Madrid por tandas, por control de calidad: queremos que cuando entres la app esté llena de gente que encaje contigo.</p>
+      <p class="lista-lede" data-status-show hidden>Te escribimos cuando abramos tu tanda. Mientras, comparte tu enlace y entra antes.</p>
+      <p class="lista-count"><span class="live" aria-hidden="true"></span><span><b data-total>307</b> personas ya esperan · Madrid abre primero</span></p>
     </div>
-
-    <form class="wl-card" data-view="form" data-step="1" novalidate>
-      <p class="wl-step" aria-live="polite" data-step-label data-template="Paso {n} de 2">Paso 1 de 2</p>
-      <div class="wl-pane" data-pane="1">
-        <h2>Guarda tu sitio</h2>
-        <p class="wl-ref" data-ref hidden>Te ha invitado alguien. Apúntate y subís puestos los dos.</p>
-        <label class="field"><span>Tu correo</span>
-          <input class="input" type="email" name="email" autocomplete="email" inputmode="email" required placeholder="nombre@correo.com" maxlength="254">
-        </label>
-        <fieldset class="chips" data-cities data-launch-tag="Abrimos primero"><legend>¿Dónde entrenas?</legend></fieldset>
-        <label class="hp" aria-hidden="true">Web<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-        <label class="check"><input type="checkbox" name="consent" required><span>Tengo 18 años o más y he leído la <a href="/privacidad.html#lista">política de privacidad</a>. Solo me escribiréis para confirmar el correo y avisarme de mi tanda.</span></label>
-        <p class="notice error" data-error role="alert" hidden></p>
-        <button class="btn main block" type="button" data-next>Seguir <svg class="arrow" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <p class="small">Gratis y sin spam: un correo para confirmar y otro cuando te toque.</p>
+    <div class="lista-card" data-status-root aria-live="polite">
+      <p class="done-status" data-status-loading hidden></p>
+      <div class="wl-view" data-view="form">
+        <div class="wl-ref" data-ref hidden><span class="wl-ref-av" data-ref-initial aria-hidden="true"></span>
+        <p><b data-ref-title data-template="{name} te ha guardado un hueco" data-generic="Te han guardado un hueco"></b><span>Apúntate con su enlace y subís 50 puestos los dos.</span></p></div>
+        <h2 class="wl-h" id="page-form-title">Guárdame el sitio</h2>
+        <p class="wl-sub">Abrimos Madrid por tandas. Déjanos tu nombre y tu correo y te avisamos cuando te toque.</p>
+        <form class="wl-form wl-form--stack" data-join data-source="lista" novalidate>
+      <div class="field">
+        <label for="f-lista-name">Tu nombre</label>
+        <input id="f-lista-name" class="input" name="name" type="text" autocomplete="given-name" autocapitalize="words" enterkeyhint="next" maxlength="40" required aria-describedby="f-lista-name-err">
+        <p class="field-err" id="f-lista-name-err" data-err="name" hidden></p>
       </div>
-      <div class="wl-pane" data-pane="2" hidden>
-        <h2>Un poco de ti</h2>
-        <p class="wl-lede-small">Con esto abrimos tandas equilibradas y te escribimos de lo tuyo. Es opcional.</p>
-        <fieldset class="chips" data-group="gender"><legend>Soy</legend><label class="chip"><input type="radio" name="gender" value="woman"><span>Mujer</span></label><label class="chip"><input type="radio" name="gender" value="man"><span>Hombre</span></label><label class="chip"><input type="radio" name="gender" value="nonbinary"><span>No binario</span></label></fieldset>
-        <fieldset class="chips" data-group="seeking"><legend>Busco</legend><label class="chip"><input type="checkbox" name="seeking" value="woman"><span>Mujeres</span></label><label class="chip"><input type="checkbox" name="seeking" value="man"><span>Hombres</span></label><label class="chip"><input type="checkbox" name="seeking" value="nonbinary"><span>Personas no binarias</span></label></fieldset>
-        <fieldset class="chips" data-group="sports"><legend>Mis deportes (hasta 3)</legend><label class="chip"><input type="checkbox" name="sports" value="padel"><span>Pádel</span></label><label class="chip"><input type="checkbox" name="sports" value="running"><span>Running</span></label><label class="chip"><input type="checkbox" name="sports" value="gym"><span>Gimnasio</span></label><label class="chip"><input type="checkbox" name="sports" value="crossfit"><span>CrossFit</span></label><label class="chip"><input type="checkbox" name="sports" value="hyrox"><span>Hyrox</span></label><label class="chip"><input type="checkbox" name="sports" value="tennis"><span>Tenis</span></label><label class="chip"><input type="checkbox" name="sports" value="cycling"><span>Ciclismo</span></label><label class="chip"><input type="checkbox" name="sports" value="trail"><span>Trail</span></label><label class="chip"><input type="checkbox" name="sports" value="climbing"><span>Escalada</span></label><label class="chip"><input type="checkbox" name="sports" value="yoga"><span>Yoga</span></label><label class="chip"><input type="checkbox" name="sports" value="pilates"><span>Pilates</span></label><label class="chip"><input type="checkbox" name="sports" value="football"><span>Fútbol</span></label><label class="chip"><input type="checkbox" name="sports" value="swimming"><span>Natación</span></label><label class="chip"><input type="checkbox" name="sports" value="boxing"><span>Boxeo</span></label><label class="chip"><input type="checkbox" name="sports" value="dance"><span>Baile</span></label></fieldset>
-        <label class="check"><input type="checkbox" name="profile_consent"><span>Acepto que uséis estos datos (incluido a quién busco) para organizar las tandas. Solo los usa Pista y puedo pedir que los borréis cuando quiera. <a href="/privacidad.html#lista">Cómo usáis estos datos</a>.</span></label>
-        <p class="notice error" data-error2 role="alert" hidden></p>
-        <button class="btn main block" type="submit">Guardar mi sitio <svg class="arrow" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="row wl-step-actions">
-          <button class="link-btn" type="button" data-back>Atrás</button>
-          <button class="link-btn" type="button" data-skip>Prefiero no decirlo</button>
-        </div>
+      <div class="field">
+        <label for="f-lista-email">Tu correo</label>
+        <input id="f-lista-email" class="input" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" enterkeyhint="next" maxlength="254" required placeholder="nombre@correo.com" aria-describedby="f-lista-email-err">
+        <p class="field-err" id="f-lista-email-err" data-err="email" hidden></p>
       </div>
+      <div class="field">
+        <label for="f-lista-city">Tu ciudad</label>
+        <span class="select"><select id="f-lista-city" class="input" name="city" required aria-describedby="f-lista-city-err"><option value="madrid" selected>Madrid (abrimos primero)</option><optgroup label="Resto de España"><option value="a-coruna">A Coruña</option><option value="albacete">Albacete</option><option value="algeciras">Algeciras</option><option value="alicante">Alicante</option><option value="almeria">Almería</option><option value="avila">Ávila</option><option value="badajoz">Badajoz</option><option value="barcelona">Barcelona</option><option value="bilbao">Bilbao</option><option value="burgos">Burgos</option><option value="caceres">Cáceres</option><option value="cadiz">Cádiz</option><option value="cartagena">Cartagena</option><option value="castellon">Castellón</option><option value="ceuta">Ceuta</option><option value="ciudad-real">Ciudad Real</option><option value="cordoba">Córdoba</option><option value="cuenca">Cuenca</option><option value="elche">Elche</option><option value="gijon">Gijón</option><option value="girona">Girona</option><option value="granada">Granada</option><option value="guadalajara">Guadalajara</option><option value="huelva">Huelva</option><option value="huesca">Huesca</option><option value="ibiza">Ibiza</option><option value="jaen">Jaén</option><option value="jerez">Jerez de la Frontera</option><option value="las-palmas">Las Palmas de Gran Canaria</option><option value="leon">León</option><option value="lleida">Lleida</option><option value="logrono">Logroño</option><option value="lugo">Lugo</option><option value="malaga">Málaga</option><option value="marbella">Marbella</option><option value="melilla">Melilla</option><option value="merida">Mérida</option><option value="murcia">Murcia</option><option value="ourense">Ourense</option><option value="oviedo">Oviedo</option><option value="palencia">Palencia</option><option value="palma">Palma</option><option value="pamplona">Pamplona</option><option value="pontevedra">Pontevedra</option><option value="salamanca">Salamanca</option><option value="san-sebastian">San Sebastián</option><option value="santa-cruz-de-tenerife">Santa Cruz de Tenerife</option><option value="santander">Santander</option><option value="santiago">Santiago de Compostela</option><option value="segovia">Segovia</option><option value="sevilla">Sevilla</option><option value="soria">Soria</option><option value="tarragona">Tarragona</option><option value="teruel">Teruel</option><option value="toledo">Toledo</option><option value="valencia">Valencia</option><option value="valladolid">Valladolid</option><option value="vigo">Vigo</option><option value="vitoria">Vitoria-Gasteiz</option><option value="zamora">Zamora</option><option value="zaragoza">Zaragoza</option></optgroup><option value="otras">Otra ciudad</option></select></span>
+        <p class="field-err" id="f-lista-city-err" data-err="city" hidden></p>
+      </div>
+      <div class="hp" aria-hidden="true"><label>Web <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <p class="wl-error" data-error role="alert" hidden></p>
+      <button class="btn btn-clay btn-block wl-submit" type="submit"><span>Guárdame el sitio</span><svg class="arrow" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M3 9h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <p class="wl-legal">Al apuntarte confirmas que tienes 18 años o más y aceptas la <a href="/privacidad.html#lista">política de privacidad</a>.</p>
     </form>
-
-    <div class="wl-card" data-view="sent" hidden>
-      <h2>Mira tu correo</h2>
-      <p data-sent-text>Te hemos mandado un enlace para confirmar. Hasta que no lo abras, tu sitio no cuenta. Si no lo ves, busca en promociones o en spam.</p>
-      <div class="row">
-        <button class="btn small" type="button" data-resend>Enviar otra vez</button>
-        <button class="btn small ghost" type="button" data-change>Usar otro correo</button>
       </div>
-      <p class="notice info" data-sent-note hidden></p>
+      <div class="wl-view wl-done" data-view="done" hidden>
+      <div class="done-head">
+        <h2 class="done-h" id="page-done-title" tabindex="-1"><span class="done-lead" data-done-lead data-template="{name}, eres el" data-anon="Eres el">Eres el</span>
+          <span class="done-num"><small>nº</small><b data-done-pos>&nbsp;</b></span></h2>
+        <p class="done-city" data-done-city data-template="en la lista de Pista" hidden></p>
+        <span class="done-burst" data-done-burst aria-hidden="true"></span>
+      </div>
+      <p class="done-status" data-done-status role="status" hidden></p>
+      <div class="done-mail" data-done-mail hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Mira tu correo</b><p>Te hemos mandado un enlace. Ábrelo y confirma para no perder el sitio. Si no lo ves, mira en promociones o en spam.</p></div></div>
+      <div class="done-share">
+        <h3>Sube puestos</h3>
+        <p data-share-rule data-template="Por cada persona que se apunte con tu enlace y confirme su correo, subes {p} puestos (y ella también).">Por cada persona que se apunte con tu enlace y confirme su correo, subes 50 puestos (y ella también).</p>
+        <a class="btn btn-wa btn-block" data-share-wa href="https://wa.me/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.2a9.7 9.7 0 0 0-8.4 14.6L2.3 21.7l5-1.3A9.7 9.7 0 1 0 12 2.2Zm0 17.7a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8.9c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.8 3 .6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2l-.6-.5Z"/></svg><span>Mandar por WhatsApp</span></a>
+        <button class="btn btn-ink btn-block" type="button" data-share-story><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.3" cy="6.8" r="1.1" fill="currentColor"/></svg><span>Subirlo a tu story</span></button>
+        <div class="share-pair">
+          <button class="btn btn-line" type="button" data-share-native hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M7 11H5.5A1.5 1.5 0 0 0 4 12.5v6A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-6a1.5 1.5 0 0 0-1.5-1.5H17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Compartir</span></button>
+          <button class="btn btn-line" type="button" data-share-copy><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Copiar</span></button>
+        </div>
+        <p class="share-link"><span>Tu enlace</span> <b data-share-link></b></p>
+        <p class="share-stats" data-share-stats hidden></p>
+      </div>
+      <div class="done-more" data-more hidden>
+        <button class="more-open" type="button" data-more-open aria-expanded="false" aria-controls="page-more">
+          <span><b data-more-title data-template="Cuéntanos un poco más y sube {p} puestos">Cuéntanos un poco más y sube 25 puestos</b><small>Veinte segundos y es opcional. Nos ayuda a abrir tandas equilibradas.</small></span>
+          <i aria-hidden="true">+</i>
+        </button>
+        <form class="more-form" id="page-more" data-more-form hidden novalidate>
+          <fieldset class="chips" data-group="gender"><legend>Soy</legend><div class="chips-in"><label class="chip"><input type="radio" name="gender" value="woman"><span>Mujer</span></label><label class="chip"><input type="radio" name="gender" value="man"><span>Hombre</span></label><label class="chip"><input type="radio" name="gender" value="nonbinary"><span>No binario</span></label></div></fieldset>
+          <fieldset class="chips" data-group="seeking"><legend>Busco</legend><div class="chips-in"><label class="chip"><input type="checkbox" name="seeking" value="woman"><span>Mujeres</span></label><label class="chip"><input type="checkbox" name="seeking" value="man"><span>Hombres</span></label><label class="chip"><input type="checkbox" name="seeking" value="nonbinary"><span>Personas no binarias</span></label></div></fieldset>
+          <fieldset class="chips" data-group="sports"><legend>Mis deportes <small>hasta 3</small></legend><div class="chips-in"><label class="chip"><input type="checkbox" name="sports" value="padel"><span>Pádel</span></label><label class="chip"><input type="checkbox" name="sports" value="running"><span>Running</span></label><label class="chip"><input type="checkbox" name="sports" value="gym"><span>Gimnasio</span></label><label class="chip"><input type="checkbox" name="sports" value="crossfit"><span>CrossFit</span></label><label class="chip"><input type="checkbox" name="sports" value="hyrox"><span>Hyrox</span></label><label class="chip"><input type="checkbox" name="sports" value="tennis"><span>Tenis</span></label><label class="chip"><input type="checkbox" name="sports" value="cycling"><span>Ciclismo</span></label><label class="chip"><input type="checkbox" name="sports" value="trail"><span>Trail</span></label><label class="chip"><input type="checkbox" name="sports" value="climbing"><span>Escalada</span></label><label class="chip"><input type="checkbox" name="sports" value="yoga"><span>Yoga</span></label><label class="chip"><input type="checkbox" name="sports" value="pilates"><span>Pilates</span></label><label class="chip"><input type="checkbox" name="sports" value="football"><span>Fútbol</span></label><label class="chip"><input type="checkbox" name="sports" value="swimming"><span>Natación</span></label><label class="chip"><input type="checkbox" name="sports" value="boxing"><span>Boxeo</span></label><label class="chip"><input type="checkbox" name="sports" value="dance"><span>Baile</span></label></div></fieldset>
+          <label class="check"><input type="checkbox" name="consent"><span>Acepto que Pista use estos datos, incluido a quién busco, para organizar las tandas. Solo los usa Pista y puedo pedir que los borréis cuando quiera. <a href="/privacidad.html#lista">Cómo los usáis</a>.</span></label>
+          <p class="wl-error" data-more-error role="alert" hidden></p>
+          <button class="btn btn-clay btn-block" type="submit" data-more-submit data-template="Subir {p} puestos">Subir 25 puestos</button>
+        </form>
+      </div>
+      <p class="more-done" data-more-done role="status" hidden></p>
     </div>
-
-    <div class="wl-card" data-view="status" hidden aria-live="polite">
-      <p class="notice info" data-confirming hidden>Confirmando tu sitio...</p>
-      <p class="notice ok" data-status-note hidden></p>
-      <div class="wl-place" data-place>
-        <p class="muted">Tu puesto en <b data-city-name></b></p>
-        <p class="num"><small>Nº</small><span data-position>&nbsp;</span></p>
-        <p class="muted">de <b class="tnum" data-waiting></b> <span data-waiting-label>personas en tu ciudad</span></p>
-        <div class="wl-meter" aria-hidden="true"><span data-meter></span></div>
-      </div>
-      <div class="share-box" data-share>
-        <h2 style="font-size:28px">Sube puestos</h2>
-        <p data-share-text>Por cada persona que se apunte con tu enlace y confirme su correo, subís 50 puestos los dos.</p>
-        <div class="share-row">
-          <input class="input" type="text" readonly data-link aria-label="Sube puestos">
-          <button class="btn small" type="button" data-copy>Copiar</button>
-        </div>
-        <div class="share-actions">
-          <a class="btn wa" data-whatsapp href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a>
-          <button class="btn ghost" type="button" data-native>Compartir</button>
-        </div>
-        <p class="stat-line" data-stats></p>
-      </div>
-      <p class="small">Guarda esta página: es tu enlace privado para ver tu puesto.</p>
+      <p class="share-link" data-bookmark hidden>Esta página es tu enlace privado: guárdala para ver tu puesto cuando quieras.</p>
     </div>
   </div>
 </section>
 
-<section class="wl-steps" aria-labelledby="steps-title">
+<section class="lista-steps" aria-labelledby="steps-title">
   <div class="wrap">
     <h2 id="steps-title">Así se entra</h2>
-    <ol><li><div><h3>Apúntate</h3><p>Tu correo, tu ciudad y, si quieres, tu deporte. Confirmas con un clic y ya tienes puesto.</p></div></li><li><div><h3>Comparte tu enlace</h3><p>Cada amigo que confirme os sube 50 puestos a los dos. Sin límite.</p></div></li><li><div><h3>Te toca</h3><p>Abrimos por tandas. Te llega un correo con tu código y entras en la app directo.</p></div></li></ol>
+    <ol><li><h3>Apúntate</h3><p>Tu nombre, tu correo y tu ciudad. Confirmas desde el correo y ya tienes sitio.</p></li><li><h3>Comparte tu enlace</h3><p>Cada persona que se apunte con él y confirme su correo os sube 50 puestos a los dos. Sin límite.</p></li><li><h3>Te toca</h3><p>Abrimos por tandas, por control de calidad. Te llega un correo con tu código y entras directo en la app.</p></li></ol>
   </div>
 </section>
 
-<section class="wl-faq" aria-labelledby="faq-title">
-  <div class="wrap faq-wrap">
+<section class="lista-faq" aria-labelledby="faq-title">
+  <div class="wrap faq-grid">
     <h2 id="faq-title">Preguntas</h2>
-    <div><details><summary>¿Por qué una lista de espera?</summary><p>Una app de citas vacía no sirve a nadie. Abrimos ciudad a ciudad y por tandas, para que cuando entres haya gente de tu zona y de tu nivel.</p></details><details><summary>¿Cuándo me toca?</summary><p>Empezamos por Madrid. Depende de tu ciudad y de tu puesto: los primeros de cada tanda entran antes, y compartir tu enlace te adelanta.</p></details><details><summary>¿Puedo entrar sin esperar?</summary><p>Sí. Con la invitación de alguien que ya está dentro, o con el código de un embajador de Pista, entras directo.</p></details><details><summary>¿Qué hacéis con mi correo?</summary><p>Lo usamos para confirmar tu sitio y avisarte cuando te toque. No lo vendemos ni lo usamos para publicidad. Los detalles están en la política de privacidad.</p></details><details><summary>¿Para qué queréis saber si soy hombre o mujer?</summary><p>Para abrir tandas equilibradas: una app de citas donde casi todo son chicos no funciona para nadie. Es opcional y solo lo usamos para eso.</p></details></div>
+    <div class="faq-list"><details><summary>¿Por qué hay lista de espera?</summary><div class="answer"><p>Una app de citas vacía no le sirve a nadie. Abrimos ciudad a ciudad y por tandas, por control de calidad, para que cuando entres haya gente cerca que encaje contigo.</p></div></details><details><summary>¿Cuándo me toca?</summary><div class="answer"><p>Empezamos por Madrid. Depende de tu ciudad y de tu puesto, y compartir tu enlace te adelanta. Te avisamos por correo cuando te toque.</p></div></details><details><summary>¿Cómo subo puestos?</summary><div class="answer"><p>Por cada persona que se apunte con tu enlace y confirme su correo, subes 50 puestos y ella también. Si nos cuentas tu género, a quién buscas y tus deportes, subes 25 más.</p></div></details><details><summary>¿Puedo entrar sin esperar?</summary><div class="answer"><p>Sí. Con la invitación de alguien que ya está dentro, o con el código de un embajador de Pista, entras directo.</p></div></details><details><summary>¿Qué hacéis con mis datos?</summary><div class="answer"><p>Usamos tu nombre y tu correo para guardarte el sitio, confirmar tu correo y avisarte cuando te toque. No los vendemos ni los usamos para publicidad. Lo tienes todo en la política de privacidad.</p></div></details></div>
   </div>
 </section>
 </main>
@@ -143,12 +140,101 @@
   <div class="wrap">
     <div class="ft-top">
       <p class="ft-motto">Nos vemos en la pista.</p>
-      <div class="ft-cols"><div><h2>Pista</h2><ul><li><a href="/#como-funciona">Cómo funciona</a></li><li><a href="/#gente">Perfiles</a></li><li><a href="/#deportes">Deportes</a></li><li><a href="/lista/">Lista de espera</a></li></ul></div><div><h2>Ayuda</h2><ul><li><a href="/soporte.html">Soporte</a></li><li><a href="/normas.html">Normas de la comunidad</a></li><li><a href="/eliminar-cuenta.html">Eliminar cuenta</a></li></ul></div><div><h2>Legal</h2><ul><li><a href="/privacidad.html">Privacidad</a></li><li><a href="/terminos.html">Términos de uso</a></li></ul></div><div><h2>Contacto</h2><ul><li><a href="mailto:hola@pista.one">hola@pista.one</a></li><li><a href="/en/">English</a></li></ul></div></div>
+      <div class="ft-cols"><div><h2>Pista</h2><ul><li><a href="/#como-funciona">Cómo funciona</a></li><li><a href="/#citas">Primeras citas</a></li><li><a href="/#seguridad">Seguridad</a></li><li><a href="/lista/">Lista de espera</a></li></ul></div><div><h2>Ayuda</h2><ul><li><a href="/#preguntas">Preguntas</a></li><li><a href="/soporte.html">Soporte</a></li><li><a href="/normas.html">Normas de la comunidad</a></li><li><a href="/eliminar-cuenta.html">Eliminar cuenta</a></li></ul></div><div><h2>Legal</h2><ul><li><a href="/privacidad.html">Privacidad</a></li><li><a href="/terminos.html">Términos de uso</a></li></ul></div><div><h2>Contacto</h2><ul><li><a href="mailto:hola@pista.one">hola@pista.one</a></li><li><a href="/en/">English</a></li></ul></div></div>
     </div>
-    <svg class="wm-big" viewBox="-9.9 -81.3 182.5 102.8" aria-hidden="true" focusable="false" data-ball="footer"><path d="M-7.6 20.5Q-8.9 20.5 -8.9 19.4Q-8.9 18.4 -7.3 18.2L-5.9 18Q-3.9 17.7 -3 16.9Q-2 16 -1.5 13.8L11.8 -43.6Q12 -44.4 11.6 -44.9Q11.1 -45.3 10.3 -44.8Q9.3 -44.3 8.4 -43.8Q7.5 -43.2 6.6 -42.6Q5.7 -42 5.1 -42.2Q4.5 -42.5 4.5 -43.2Q4.5 -43.9 5.5 -44.6Q8.3 -46.5 11.3 -47.9Q13 -48.7 13.4 -50.5L14.7 -56.2Q15.2 -58.3 17.3 -58.3L19.1 -58.3Q20.3 -58.3 20.9 -57.6Q21.5 -56.9 21.2 -55.6L20.5 -52.7Q20.2 -51 21.8 -51.3Q24.1 -51.6 26.2 -51.6Q33.6 -51.6 38.3 -47.4Q43 -43.2 43 -34.5Q43 -27.7 40.5 -21.4Q38 -15 33.9 -10Q29.8 -5 24.9 -2.1Q20 0.9 15.1 0.9Q12.4 0.9 10 -0.2Q8.5 -0.9 8.2 0.6L5.2 13.8Q4.7 16 5.2 16.7Q5.8 17.4 7.7 17.7L10.3 18.1Q12.1 18.4 12.1 19.3Q12.1 20.5 10.4 20.5ZM11 -11.5Q9.2 -1.6 15.3 -1.6Q18.8 -1.6 22.4 -4.5Q26 -7.5 29.1 -12.5Q32.2 -17.4 34.1 -23.6Q36 -29.8 36 -36.3Q36 -43 33.1 -46Q30.2 -48.9 24.6 -48.9Q19.6 -48.9 18.9 -45.5ZM56 1Q52.7 1 51.3 -1.5Q49.9 -3.9 51.2 -9.5L58.6 -41.2Q59.1 -43.4 58.8 -44.7Q58.4 -45.9 56.9 -45.9Q55.1 -45.9 52.9 -43.2Q50.8 -40.6 48.1 -33.2Q47.7 -31.9 46.7 -31.9Q45.2 -31.9 45.9 -33.7Q48.1 -40.6 50.5 -44.5Q53 -48.4 55.5 -50Q58 -51.6 60.1 -51.6Q63.6 -51.6 65 -49.2Q66.4 -46.7 65.1 -41.1L57.7 -9.4Q57.2 -7.2 57.5 -6Q57.9 -4.7 59.4 -4.7Q61.2 -4.7 63.3 -7.4Q65.5 -10 68.2 -17.4Q68.6 -18.7 69.6 -18.7Q71.1 -18.7 70.4 -16.9Q68.3 -10.1 65.8 -6.2Q63.2 -2.2 60.7 -0.6Q58.2 1 56 1ZM83 0.9Q79.7 0.9 76.1 -0.1Q72.4 -1.1 70.5 -2.6Q69.8 -3.2 69.9 -4.4L72.1 -17.5Q72.3 -18.8 73.3 -18.8Q74.4 -18.8 74.4 -17.4L74.6 -12.6Q74.8 -6.9 77.4 -4.2Q79.9 -1.6 83.6 -1.6Q86.8 -1.6 89.1 -3.7Q91.4 -5.7 91.4 -9.7Q91.4 -12 90.7 -14Q90 -15.9 88.5 -18.2Q87 -20.4 84.4 -23.6Q81 -28 79.4 -31.2Q77.7 -34.3 77.7 -37.7Q77.7 -44 81.7 -47.8Q85.6 -51.6 91.7 -51.6Q94.4 -51.6 97 -50.8Q99.5 -50 101.2 -48.4Q102.1 -47.7 101.8 -46.6L99 -33.2Q98.7 -31.9 97.8 -31.9Q96.9 -31.9 96.7 -33.3L96.4 -38.1Q96 -44.1 94.9 -46.7Q93.7 -49.3 90.1 -49.3Q86.9 -49.3 84.9 -47.1Q82.9 -44.9 82.9 -41.8Q82.9 -38.5 84.7 -35.8Q86.5 -33 89.6 -28.8Q93.7 -23.4 95.2 -20.2Q96.6 -17 96.6 -13.7Q96.6 -9.5 94.8 -6.2Q92.9 -2.9 89.8 -1Q86.7 0.9 83 0.9ZM110.6 0.9Q107.2 0.9 105.3 -1.8Q103.4 -4.5 104.7 -10.5L113 -46.7Q113.3 -48.2 111.8 -48.2L108 -48.2Q106.6 -48.2 106.6 -49.5Q106.6 -50.2 107.1 -50.6Q107.6 -51 108.3 -51L111.9 -51Q114.2 -51 114.6 -53.1L117 -63.8Q117.3 -64.9 118.4 -64.9L122.5 -64.9Q123.9 -64.9 123.6 -63.6L121.1 -52.5Q120.8 -51 122.3 -51L128 -51Q129.7 -51 129.7 -49.7Q129.7 -48.2 127.6 -48.2L122.2 -48.2Q120 -48.2 119.5 -46.1L111.1 -9.5Q110.6 -7.3 111.2 -6.1Q111.9 -4.8 113.5 -4.8Q115.8 -4.8 117.8 -7.4Q119.7 -10 121.9 -17.3Q122.3 -18.6 123.2 -18.6Q123.9 -18.6 124.1 -18Q124.3 -17.4 123.8 -15.8Q121.9 -9 119.7 -5.4Q117.4 -1.8 115.1 -0.5Q112.8 0.9 110.6 0.9ZM135.3 0.9Q131.7 0.9 129.7 -2.2Q127.7 -5.3 127.7 -11.3Q127.7 -17 129.3 -22.8Q130.9 -28.5 133.7 -33.7Q136.5 -38.9 140.1 -42.9Q143.6 -46.9 147.6 -49.2Q151.5 -51.6 155.4 -51.6Q157.3 -51.6 159 -50.9Q160.7 -50.1 161.8 -48.5Q162.4 -47.6 163 -47.6Q163.6 -47.6 164.2 -48.5Q165.3 -50.1 166 -50.6Q166.7 -51 167.3 -51Q168.6 -51 168.3 -49.6L159.4 -11.3Q157.9 -4.8 161.4 -4.8Q163.7 -4.8 165.6 -7.9Q167.4 -11 169.3 -17.5Q169.6 -18.6 170.6 -18.6Q171.3 -18.6 171.5 -18Q171.7 -17.4 171.5 -16.6Q169.6 -7.2 166.4 -3.2Q163.2 0.9 158.7 0.9Q154.8 0.9 153.2 -2.4Q151.5 -5.7 152.8 -11.4L154.1 -16.9Q154.3 -17.6 153.9 -17.7Q153.4 -17.8 153.1 -17.2Q147.6 -7.1 143.3 -3.1Q139.1 0.9 135.3 0.9ZM137.8 -4.2Q140.2 -4.2 143.1 -7.1Q146 -10 148.9 -14.6Q151.7 -19.2 154.1 -24.5Q156.5 -29.8 158 -34.7Q159.4 -39.6 159.4 -43Q159.4 -49.1 155.1 -49.1Q152.5 -49.1 149.6 -46.8Q146.7 -44.4 144.1 -40.4Q141.4 -36.4 139.2 -31.4Q137.1 -26.3 135.8 -20.9Q134.5 -15.4 134.5 -10.2Q134.5 -6.7 135.3 -5.5Q136.2 -4.2 137.8 -4.2Z" fill="currentColor"/><g class="wm-ball" transform="rotate(-18 62.8 -71.4)"><circle cx="62.8" cy="-71.4" r="8.1" fill="#D7F24B"/><path d="M57.1 -77.2A7.5 7.5 0 0 1 57.1 -65.6M68.5 -77.2A7.5 7.5 0 0 0 68.5 -65.6" fill="none" stroke="#143F31" stroke-width="0.9"/></g></svg>
-    <div class="ft-bottom"><span>© 2026 Pista. Hecha en Madrid.</span><a href="/privacidad.html#web">Esta web no usa cookies ni rastreadores.</a></div>
+    <svg class="wm-big" viewBox="-9.9 -81.3 182.5 102.8" aria-hidden="true" focusable="false"><path d="M-7.6 20.5Q-8.9 20.5 -8.9 19.4Q-8.9 18.4 -7.3 18.2L-5.9 18Q-3.9 17.7 -3 16.9Q-2 16 -1.5 13.8L11.8 -43.6Q12 -44.4 11.6 -44.9Q11.1 -45.3 10.3 -44.8Q9.3 -44.3 8.4 -43.8Q7.5 -43.2 6.6 -42.6Q5.7 -42 5.1 -42.2Q4.5 -42.5 4.5 -43.2Q4.5 -43.9 5.5 -44.6Q8.3 -46.5 11.3 -47.9Q13 -48.7 13.4 -50.5L14.7 -56.2Q15.2 -58.3 17.3 -58.3L19.1 -58.3Q20.3 -58.3 20.9 -57.6Q21.5 -56.9 21.2 -55.6L20.5 -52.7Q20.2 -51 21.8 -51.3Q24.1 -51.6 26.2 -51.6Q33.6 -51.6 38.3 -47.4Q43 -43.2 43 -34.5Q43 -27.7 40.5 -21.4Q38 -15 33.9 -10Q29.8 -5 24.9 -2.1Q20 0.9 15.1 0.9Q12.4 0.9 10 -0.2Q8.5 -0.9 8.2 0.6L5.2 13.8Q4.7 16 5.2 16.7Q5.8 17.4 7.7 17.7L10.3 18.1Q12.1 18.4 12.1 19.3Q12.1 20.5 10.4 20.5ZM11 -11.5Q9.2 -1.6 15.3 -1.6Q18.8 -1.6 22.4 -4.5Q26 -7.5 29.1 -12.5Q32.2 -17.4 34.1 -23.6Q36 -29.8 36 -36.3Q36 -43 33.1 -46Q30.2 -48.9 24.6 -48.9Q19.6 -48.9 18.9 -45.5ZM56 1Q52.7 1 51.3 -1.5Q49.9 -3.9 51.2 -9.5L58.6 -41.2Q59.1 -43.4 58.8 -44.7Q58.4 -45.9 56.9 -45.9Q55.1 -45.9 52.9 -43.2Q50.8 -40.6 48.1 -33.2Q47.7 -31.9 46.7 -31.9Q45.2 -31.9 45.9 -33.7Q48.1 -40.6 50.5 -44.5Q53 -48.4 55.5 -50Q58 -51.6 60.1 -51.6Q63.6 -51.6 65 -49.2Q66.4 -46.7 65.1 -41.1L57.7 -9.4Q57.2 -7.2 57.5 -6Q57.9 -4.7 59.4 -4.7Q61.2 -4.7 63.3 -7.4Q65.5 -10 68.2 -17.4Q68.6 -18.7 69.6 -18.7Q71.1 -18.7 70.4 -16.9Q68.3 -10.1 65.8 -6.2Q63.2 -2.2 60.7 -0.6Q58.2 1 56 1ZM83 0.9Q79.7 0.9 76.1 -0.1Q72.4 -1.1 70.5 -2.6Q69.8 -3.2 69.9 -4.4L72.1 -17.5Q72.3 -18.8 73.3 -18.8Q74.4 -18.8 74.4 -17.4L74.6 -12.6Q74.8 -6.9 77.4 -4.2Q79.9 -1.6 83.6 -1.6Q86.8 -1.6 89.1 -3.7Q91.4 -5.7 91.4 -9.7Q91.4 -12 90.7 -14Q90 -15.9 88.5 -18.2Q87 -20.4 84.4 -23.6Q81 -28 79.4 -31.2Q77.7 -34.3 77.7 -37.7Q77.7 -44 81.7 -47.8Q85.6 -51.6 91.7 -51.6Q94.4 -51.6 97 -50.8Q99.5 -50 101.2 -48.4Q102.1 -47.7 101.8 -46.6L99 -33.2Q98.7 -31.9 97.8 -31.9Q96.9 -31.9 96.7 -33.3L96.4 -38.1Q96 -44.1 94.9 -46.7Q93.7 -49.3 90.1 -49.3Q86.9 -49.3 84.9 -47.1Q82.9 -44.9 82.9 -41.8Q82.9 -38.5 84.7 -35.8Q86.5 -33 89.6 -28.8Q93.7 -23.4 95.2 -20.2Q96.6 -17 96.6 -13.7Q96.6 -9.5 94.8 -6.2Q92.9 -2.9 89.8 -1Q86.7 0.9 83 0.9ZM110.6 0.9Q107.2 0.9 105.3 -1.8Q103.4 -4.5 104.7 -10.5L113 -46.7Q113.3 -48.2 111.8 -48.2L108 -48.2Q106.6 -48.2 106.6 -49.5Q106.6 -50.2 107.1 -50.6Q107.6 -51 108.3 -51L111.9 -51Q114.2 -51 114.6 -53.1L117 -63.8Q117.3 -64.9 118.4 -64.9L122.5 -64.9Q123.9 -64.9 123.6 -63.6L121.1 -52.5Q120.8 -51 122.3 -51L128 -51Q129.7 -51 129.7 -49.7Q129.7 -48.2 127.6 -48.2L122.2 -48.2Q120 -48.2 119.5 -46.1L111.1 -9.5Q110.6 -7.3 111.2 -6.1Q111.9 -4.8 113.5 -4.8Q115.8 -4.8 117.8 -7.4Q119.7 -10 121.9 -17.3Q122.3 -18.6 123.2 -18.6Q123.9 -18.6 124.1 -18Q124.3 -17.4 123.8 -15.8Q121.9 -9 119.7 -5.4Q117.4 -1.8 115.1 -0.5Q112.8 0.9 110.6 0.9ZM135.3 0.9Q131.7 0.9 129.7 -2.2Q127.7 -5.3 127.7 -11.3Q127.7 -17 129.3 -22.8Q130.9 -28.5 133.7 -33.7Q136.5 -38.9 140.1 -42.9Q143.6 -46.9 147.6 -49.2Q151.5 -51.6 155.4 -51.6Q157.3 -51.6 159 -50.9Q160.7 -50.1 161.8 -48.5Q162.4 -47.6 163 -47.6Q163.6 -47.6 164.2 -48.5Q165.3 -50.1 166 -50.6Q166.7 -51 167.3 -51Q168.6 -51 168.3 -49.6L159.4 -11.3Q157.9 -4.8 161.4 -4.8Q163.7 -4.8 165.6 -7.9Q167.4 -11 169.3 -17.5Q169.6 -18.6 170.6 -18.6Q171.3 -18.6 171.5 -18Q171.7 -17.4 171.5 -16.6Q169.6 -7.2 166.4 -3.2Q163.2 0.9 158.7 0.9Q154.8 0.9 153.2 -2.4Q151.5 -5.7 152.8 -11.4L154.1 -16.9Q154.3 -17.6 153.9 -17.7Q153.4 -17.8 153.1 -17.2Q147.6 -7.1 143.3 -3.1Q139.1 0.9 135.3 0.9ZM137.8 -4.2Q140.2 -4.2 143.1 -7.1Q146 -10 148.9 -14.6Q151.7 -19.2 154.1 -24.5Q156.5 -29.8 158 -34.7Q159.4 -39.6 159.4 -43Q159.4 -49.1 155.1 -49.1Q152.5 -49.1 149.6 -46.8Q146.7 -44.4 144.1 -40.4Q141.4 -36.4 139.2 -31.4Q137.1 -26.3 135.8 -20.9Q134.5 -15.4 134.5 -10.2Q134.5 -6.7 135.3 -5.5Q136.2 -4.2 137.8 -4.2Z" fill="currentColor"/><g class="wm-ball" transform="rotate(-18 62.8 -71.4)"><circle cx="62.8" cy="-71.4" r="8.1" fill="#D7F24B"/><path d="M57.1 -77.2A7.5 7.5 0 0 1 57.1 -65.6M68.5 -77.2A7.5 7.5 0 0 0 68.5 -65.6" fill="none" stroke="#143F31" stroke-width="0.9"/></g></svg>
+    <div class="ft-bottom"><span>© 2026 Pista. Hecha en Madrid. Solo iPhone.</span><a href="/privacidad.html#web">Esta web no usa cookies ni rastreadores.</a></div>
   </div>
 </footer>
+<dialog class="sheet" data-sheet data-story-photos="/assets/photos/lucia-1-720.webp|/assets/photos/marcos-1-720.webp" data-story-names="Lucía 29|Marcos 31" aria-labelledby="sheet-title">
+  <div class="sheet-panel" data-sheet-panel>
+    <div class="sheet-bar"><span class="sheet-grab" data-sheet-grab aria-hidden="true"></span>
+      <button class="sheet-x" type="button" data-close aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+    <div class="sheet-body" data-sheet-body>
+      <div class="wl-view" data-view="form">
+        <div class="wl-ref" data-ref hidden><span class="wl-ref-av" data-ref-initial aria-hidden="true"></span>
+        <p><b data-ref-title data-template="{name} te ha guardado un hueco" data-generic="Te han guardado un hueco"></b><span>Apúntate con su enlace y subís 50 puestos los dos.</span></p></div>
+        <h2 class="wl-h" id="sheet-title" tabindex="-1">Guárdame el sitio</h2>
+        <p class="wl-sub">Abrimos Madrid por tandas. Déjanos tu nombre y tu correo y te avisamos cuando te toque.</p>
+        <form class="wl-form wl-form--stack" data-join data-source="sheet" novalidate>
+      <div class="field">
+        <label for="f-sheet-name">Tu nombre</label>
+        <input id="f-sheet-name" class="input" name="name" type="text" autocomplete="given-name" autocapitalize="words" enterkeyhint="next" maxlength="40" required aria-describedby="f-sheet-name-err">
+        <p class="field-err" id="f-sheet-name-err" data-err="name" hidden></p>
+      </div>
+      <div class="field">
+        <label for="f-sheet-email">Tu correo</label>
+        <input id="f-sheet-email" class="input" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" enterkeyhint="next" maxlength="254" required placeholder="nombre@correo.com" aria-describedby="f-sheet-email-err">
+        <p class="field-err" id="f-sheet-email-err" data-err="email" hidden></p>
+      </div>
+      <div class="field">
+        <label for="f-sheet-city">Tu ciudad</label>
+        <span class="select"><select id="f-sheet-city" class="input" name="city" required aria-describedby="f-sheet-city-err"><option value="madrid" selected>Madrid (abrimos primero)</option><optgroup label="Resto de España"><option value="a-coruna">A Coruña</option><option value="albacete">Albacete</option><option value="algeciras">Algeciras</option><option value="alicante">Alicante</option><option value="almeria">Almería</option><option value="avila">Ávila</option><option value="badajoz">Badajoz</option><option value="barcelona">Barcelona</option><option value="bilbao">Bilbao</option><option value="burgos">Burgos</option><option value="caceres">Cáceres</option><option value="cadiz">Cádiz</option><option value="cartagena">Cartagena</option><option value="castellon">Castellón</option><option value="ceuta">Ceuta</option><option value="ciudad-real">Ciudad Real</option><option value="cordoba">Córdoba</option><option value="cuenca">Cuenca</option><option value="elche">Elche</option><option value="gijon">Gijón</option><option value="girona">Girona</option><option value="granada">Granada</option><option value="guadalajara">Guadalajara</option><option value="huelva">Huelva</option><option value="huesca">Huesca</option><option value="ibiza">Ibiza</option><option value="jaen">Jaén</option><option value="jerez">Jerez de la Frontera</option><option value="las-palmas">Las Palmas de Gran Canaria</option><option value="leon">León</option><option value="lleida">Lleida</option><option value="logrono">Logroño</option><option value="lugo">Lugo</option><option value="malaga">Málaga</option><option value="marbella">Marbella</option><option value="melilla">Melilla</option><option value="merida">Mérida</option><option value="murcia">Murcia</option><option value="ourense">Ourense</option><option value="oviedo">Oviedo</option><option value="palencia">Palencia</option><option value="palma">Palma</option><option value="pamplona">Pamplona</option><option value="pontevedra">Pontevedra</option><option value="salamanca">Salamanca</option><option value="san-sebastian">San Sebastián</option><option value="santa-cruz-de-tenerife">Santa Cruz de Tenerife</option><option value="santander">Santander</option><option value="santiago">Santiago de Compostela</option><option value="segovia">Segovia</option><option value="sevilla">Sevilla</option><option value="soria">Soria</option><option value="tarragona">Tarragona</option><option value="teruel">Teruel</option><option value="toledo">Toledo</option><option value="valencia">Valencia</option><option value="valladolid">Valladolid</option><option value="vigo">Vigo</option><option value="vitoria">Vitoria-Gasteiz</option><option value="zamora">Zamora</option><option value="zaragoza">Zaragoza</option></optgroup><option value="otras">Otra ciudad</option></select></span>
+        <p class="field-err" id="f-sheet-city-err" data-err="city" hidden></p>
+      </div>
+      <div class="hp" aria-hidden="true"><label>Web <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <p class="wl-error" data-error role="alert" hidden></p>
+      <button class="btn btn-clay btn-block wl-submit" type="submit"><span>Guárdame el sitio</span><svg class="arrow" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M3 9h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <p class="wl-legal">Al apuntarte confirmas que tienes 18 años o más y aceptas la <a href="/privacidad.html#lista">política de privacidad</a>.</p>
+    </form>
+      </div>
+      <div class="wl-view wl-done" data-view="done" hidden>
+      <div class="done-head">
+        <h2 class="done-h" id="sheet-done-title" tabindex="-1"><span class="done-lead" data-done-lead data-template="{name}, eres el" data-anon="Eres el">Eres el</span>
+          <span class="done-num"><small>nº</small><b data-done-pos>&nbsp;</b></span></h2>
+        <p class="done-city" data-done-city data-template="en la lista de Pista" hidden></p>
+        <span class="done-burst" data-done-burst aria-hidden="true"></span>
+      </div>
+      <p class="done-status" data-done-status role="status" hidden></p>
+      <div class="done-mail" data-done-mail hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Mira tu correo</b><p>Te hemos mandado un enlace. Ábrelo y confirma para no perder el sitio. Si no lo ves, mira en promociones o en spam.</p></div></div>
+      <div class="done-share">
+        <h3>Sube puestos</h3>
+        <p data-share-rule data-template="Por cada persona que se apunte con tu enlace y confirme su correo, subes {p} puestos (y ella también).">Por cada persona que se apunte con tu enlace y confirme su correo, subes 50 puestos (y ella también).</p>
+        <a class="btn btn-wa btn-block" data-share-wa href="https://wa.me/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.2a9.7 9.7 0 0 0-8.4 14.6L2.3 21.7l5-1.3A9.7 9.7 0 1 0 12 2.2Zm0 17.7a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8.9c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.8 3 .6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2l-.6-.5Z"/></svg><span>Mandar por WhatsApp</span></a>
+        <button class="btn btn-ink btn-block" type="button" data-share-story><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.3" cy="6.8" r="1.1" fill="currentColor"/></svg><span>Subirlo a tu story</span></button>
+        <div class="share-pair">
+          <button class="btn btn-line" type="button" data-share-native hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M7 11H5.5A1.5 1.5 0 0 0 4 12.5v6A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-6a1.5 1.5 0 0 0-1.5-1.5H17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Compartir</span></button>
+          <button class="btn btn-line" type="button" data-share-copy><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Copiar</span></button>
+        </div>
+        <p class="share-link"><span>Tu enlace</span> <b data-share-link></b></p>
+        <p class="share-stats" data-share-stats hidden></p>
+      </div>
+      <div class="done-more" data-more hidden>
+        <button class="more-open" type="button" data-more-open aria-expanded="false" aria-controls="sheet-more">
+          <span><b data-more-title data-template="Cuéntanos un poco más y sube {p} puestos">Cuéntanos un poco más y sube 25 puestos</b><small>Veinte segundos y es opcional. Nos ayuda a abrir tandas equilibradas.</small></span>
+          <i aria-hidden="true">+</i>
+        </button>
+        <form class="more-form" id="sheet-more" data-more-form hidden novalidate>
+          <fieldset class="chips" data-group="gender"><legend>Soy</legend><div class="chips-in"><label class="chip"><input type="radio" name="gender" value="woman"><span>Mujer</span></label><label class="chip"><input type="radio" name="gender" value="man"><span>Hombre</span></label><label class="chip"><input type="radio" name="gender" value="nonbinary"><span>No binario</span></label></div></fieldset>
+          <fieldset class="chips" data-group="seeking"><legend>Busco</legend><div class="chips-in"><label class="chip"><input type="checkbox" name="seeking" value="woman"><span>Mujeres</span></label><label class="chip"><input type="checkbox" name="seeking" value="man"><span>Hombres</span></label><label class="chip"><input type="checkbox" name="seeking" value="nonbinary"><span>Personas no binarias</span></label></div></fieldset>
+          <fieldset class="chips" data-group="sports"><legend>Mis deportes <small>hasta 3</small></legend><div class="chips-in"><label class="chip"><input type="checkbox" name="sports" value="padel"><span>Pádel</span></label><label class="chip"><input type="checkbox" name="sports" value="running"><span>Running</span></label><label class="chip"><input type="checkbox" name="sports" value="gym"><span>Gimnasio</span></label><label class="chip"><input type="checkbox" name="sports" value="crossfit"><span>CrossFit</span></label><label class="chip"><input type="checkbox" name="sports" value="hyrox"><span>Hyrox</span></label><label class="chip"><input type="checkbox" name="sports" value="tennis"><span>Tenis</span></label><label class="chip"><input type="checkbox" name="sports" value="cycling"><span>Ciclismo</span></label><label class="chip"><input type="checkbox" name="sports" value="trail"><span>Trail</span></label><label class="chip"><input type="checkbox" name="sports" value="climbing"><span>Escalada</span></label><label class="chip"><input type="checkbox" name="sports" value="yoga"><span>Yoga</span></label><label class="chip"><input type="checkbox" name="sports" value="pilates"><span>Pilates</span></label><label class="chip"><input type="checkbox" name="sports" value="football"><span>Fútbol</span></label><label class="chip"><input type="checkbox" name="sports" value="swimming"><span>Natación</span></label><label class="chip"><input type="checkbox" name="sports" value="boxing"><span>Boxeo</span></label><label class="chip"><input type="checkbox" name="sports" value="dance"><span>Baile</span></label></div></fieldset>
+          <label class="check"><input type="checkbox" name="consent"><span>Acepto que Pista use estos datos, incluido a quién busco, para organizar las tandas. Solo los usa Pista y puedo pedir que los borréis cuando quiera. <a href="/privacidad.html#lista">Cómo los usáis</a>.</span></label>
+          <p class="wl-error" data-more-error role="alert" hidden></p>
+          <button class="btn btn-clay btn-block" type="submit" data-more-submit data-template="Subir {p} puestos">Subir 25 puestos</button>
+        </form>
+      </div>
+      <p class="more-done" data-more-done role="status" hidden></p>
+    </div>
+      <div class="wl-view wl-known" data-view="known" hidden>
+      <span class="known-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <h2 class="wl-h" id="sheet-known-title" tabindex="-1">Ya estabas en la lista</h2>
+      <p class="wl-sub">Te hemos mandado tu enlace por correo para que veas tu puesto y lo compartas. Si no lo ves, mira en promociones o en spam.</p>
+      <button class="btn btn-ink btn-block" type="button" data-close>Vale</button>
+    </div>
+    </div>
+  </div>
+</dialog>
+<dialog class="story" data-story aria-labelledby="story-title">
+  <div class="story-panel">
+    <div class="story-top"><h2 id="story-title">Tu story</h2>
+      <button class="sheet-x" type="button" data-story-close aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+    <img class="story-img" data-story-img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'/%3E" alt="" width="1080" height="1920">
+    <p class="story-hint">Mantén pulsada la imagen para guardarla. Súbela a tu story y pega tu enlace con el sticker de enlace.</p>
+    <a class="btn btn-ink btn-block" data-story-save download="pista-story.png" href="#">Guardar imagen</a>
+  </div>
+</dialog>
+<script type="application/json" id="wl-strings">{"err_name": "Dinos cómo te llamas.", "err_email": "Ese correo no parece bien escrito. Revísalo.", "err_city": "Elige tu ciudad.", "err_disposable": "Ese correo es de usar y tirar. Pon uno que mires de verdad.", "err_rate": "Demasiados intentos seguidos desde tu conexión. Prueba otra vez en un rato.", "err_network": "No hay conexión. Prueba otra vez en un momento.", "err_config": "La lista aún no está abierta. Vuelve en un rato.", "err_generic": "Algo ha fallado por nuestro lado. Prueba otra vez.", "err_consent": "Marca la casilla para que podamos usar estos datos.", "err_profile": "Elige al menos una opción.", "err_link": "Ese enlace ya no vale o no es correcto. Apúntate otra vez con tu correo y te mandamos uno nuevo.", "sports_max": "Hasta 3 deportes.", "copied": "Enlace copiado", "story_busy": "Preparando tu story...", "story_ready": "Imagen lista", "busy": "Un segundo...", "share_msg": "Me he apuntado a Pista, la app de citas para gente que hace deporte. Abren Madrid por tandas: apúntate con mi enlace y subimos los dos.", "share_title": "Pista: la app de citas para gente que hace deporte", "more_done": "Hecho. Has subido {p} puestos.", "profile_done": "Ya nos contaste un poco más de ti. Gracias.", "confirming": "Confirmando tu correo...", "loading": "Buscando tu sitio...", "st_confirmed_now": "Correo confirmado. Ya cuentas en la lista.", "st_pending": "Aún no has confirmado tu correo. Búscalo en tu bandeja (y en promociones) para no perder el sitio.", "st_confirmed": "Correo confirmado. Te escribimos cuando te toque.", "st_admitted": "Te toca. Te hemos mandado un correo con tu código para entrar en la app.", "st_joined": "Ya estás dentro de Pista. Nos vemos en la pista.", "refs_0": "Aún nadie se ha apuntado con tu enlace.", "refs_1": "1 persona se ha apuntado con tu enlace.", "refs_n": "{n} personas se han apuntado con tu enlace.", "story_kicker": "La app de citas para gente que hace deporte", "story_h1": "Busco pareja", "story_h2": "de verdad.", "story_num": "Soy el nº {pos}", "story_list": "en la lista de Pista", "story_cta": "Apúntate con mi enlace y subimos los dos", "announce_done": "Te has apuntado. Eres el número {pos}.", "dock_joined": "Tu sitio: nº {pos}", "you": "Tú", "lang": "es", "launch": "madrid", "other_city": "Otra ciudad", "city_first": "Madrid (abrimos primero)", "city_group": "Resto de España"}</script>
 <div class="toast" role="status" aria-live="polite" data-toast></div>
+<script src="/config.js" defer></script><script src="/assets/api.js" defer></script><script src="/assets/waitlist.js" defer></script><script src="/assets/doc.js" defer></script>
 </body>
 </html>

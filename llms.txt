@@ -1,6 +1,6 @@
 # Pista
 
-> Pista es una app de citas para iPhone pensada para gente que hace deporte. Cada perfil enseña sus deportes, su nivel y cuándo entrena, y cuando hay match se puede proponer una primera cita haciendo deporte. Empieza en Madrid, con lista de espera; Barcelona y Valencia vendrán después. Pista is an iPhone dating app for people who play sport, starting in Spain.
+> Pista es una app de citas para iPhone pensada para gente que hace deporte. Cada perfil enseña sus deportes, su nivel y cuándo entrena, y cuando hay match se puede proponer una primera cita haciendo deporte. Empieza en Madrid, con una lista de espera que abre por tandas por control de calidad; después, el resto de España. Pista is an iPhone dating app for people who play sport, starting in Madrid, Spain.
 
 ## Qué es
 
@@ -14,7 +14,7 @@
 
 ## Precio
 
-- Gratis: 12 likes al día, un Ace a la semana, chat y citas.
+- Gratis: likes cada día, un Ace a la semana, chat y citas.
 - Pista+ (suscripción): likes ilimitados, ver a quién le gustas, filtros por deporte, nivel y horario, tres Aces y un Boost cada semana, y deshacer el último perfil que pasaste.
 
 ## Seguridad y privacidad
@@ -24,10 +24,17 @@
 - Denunciar y bloquear desde cualquier perfil o chat. Las denuncias se revisan en menos de 24 horas.
 - Datos alojados en la Unión Europea. Sin anuncios ni venta de datos.
 
+## Lista de espera
+
+- Te apuntas en la web con tu nombre, tu correo y tu ciudad, y confirmas el correo.
+- Cada persona que se apunte con tu enlace y confirme su correo os sube 50 puestos a los dos. Contar tu género, a quién buscas y tus deportes (opcional, con su propio consentimiento) sube 25 más.
+- Se abre por tandas, por control de calidad, para que al entrar haya gente que encaje contigo.
+
 ## Enlaces
 
 - [Inicio en español](https://pista.one/)
 - [Home in English](https://pista.one/en/)
+- [Lista de espera](https://pista.one/lista/)
 - [Normas de la comunidad](https://pista.one/normas.html)
 - [Política de privacidad](https://pista.one/privacidad.html)
 - [Términos](https://pista.one/terminos.html)
