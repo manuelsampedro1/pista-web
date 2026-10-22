@@ -1,10 +1,11 @@
-/* Pista, portada "Busco pareja". El mazo de perfiles se desliza con el dedo (GSAP Draggable con inercia): a la
-   derecha es like, con corazones; a la izquierda pasas y la tarjeta sale volando. Tocar la foto enseña la
-   siguiente. A los dos likes, "Es un match" y de ahí a la hoja para apuntarse. Además: titular que cambia una
-   vez y se queda en "de verdad", fondo que toma el color de cada foto, cabecera que se vuelve sólida, barra fija
-   con el botón, apariciones al bajar, carrusel de citas y contador.
-   Con "reducir movimiento" se sigue pudiendo deslizar, pero todo lo demás pasa a fundidos. Sin GSAP, los botones
-   y el teclado siguen funcionando. */
+/* Pista, portada "Busco pareja". El mazo de perfiles ocupa la pantalla del móvil y se desliza con el dedo (GSAP
+   Draggable con inercia): a la derecha es like, con corazones; a la izquierda pasas y la tarjeta sale volando. El
+   aspa y el corazón van en cada tarjeta, como en la app, y tocar la foto enseña la siguiente. A los dos likes,
+   "Es un match" y de ahí a la hoja para apuntarse. Además: titular que cambia una vez y se queda en "de verdad",
+   un chat que se escribe solo al bajar (del like a la cita), cabecera, barra fija con el botón, apariciones al
+   bajar, carrusel de citas y contador.
+   Con "reducir movimiento" se sigue pudiendo deslizar, pero todo lo demás pasa a fundidos y el chat sale ya
+   terminado. Sin GSAP, los botones y el teclado siguen funcionando. */
 (function () {
   'use strict';
   var d = document;
@@ -129,12 +130,9 @@
   if (stack) {
     var cards = $$('[data-card]', stack);
     var ui = JSON.parse(stack.getAttribute('data-ui') || '{}');
-    var likeBtn = $('[data-like]');
-    var passBtn = $('[data-pass]');
     var hint = $('[data-hint]');
     var live = $('[data-stack-live]');
     var end = $('[data-stack-end]', stack);
-    var amb = $$('[data-amb] i');
     var index = 0, likes = 0, matched = false, busy = false, dragger = null, touched = false, moved = false;
 
     var top = function () { return cards[index]; };
@@ -158,10 +156,7 @@
       var done = !card;
       end.hidden = !done;
       if (done) { end.classList.add('is-in'); }
-      [likeBtn, passBtn].forEach(function (b) { b.disabled = done; });
       if (card) {
-        likeBtn.setAttribute('aria-label', fill(ui.like, { name: nameOf(card) }));
-        passBtn.setAttribute('aria-label', fill(ui.pass, { name: nameOf(card) }));
         // Las fotos de la tarjeta que viene (y las demás de esta) se piden ya, salvo al cargar la página:
         // entonces esperan a que termine para no competir con la primera foto.
         var nxt = cards[index + 1];
@@ -171,7 +166,6 @@
         };
         if (pageLoaded) warm(); else window.addEventListener('load', function () { whenIdle(warm); }, { once: true });
       }
-      amb.forEach(function (a, i) { a.classList.toggle('is-on', i === Math.min(index, amb.length - 1)); });
       bindDrag();
     }
 
@@ -194,6 +188,8 @@
 
     function done(card, dir) {
       var name = nameOf(card);
+      var act = d.activeElement;
+      var hadFocus = act && card.contains(act) ? (act.hasAttribute('data-like') ? 'like' : 'pass') : null;
       index += 1;
       busy = false;
       stack.classList.remove('is-dragging');
@@ -203,7 +199,12 @@
         likes += 1;
         if (likes >= 2 && !matched) { matched = true; setTimeout(function () { openMatch(card); }, reduce ? 150 : 380); }
       }
-      if (!top() && end) { var b = $('button', end); if (b && d.activeElement && (d.activeElement === likeBtn || d.activeElement === passBtn)) b.focus(); }
+      // Si el foco estaba en los botones de la tarjeta que se ha ido, pasa a los de la siguiente (o al final del mazo).
+      if (hadFocus) {
+        var next = top();
+        var target = next ? $(hadFocus === 'like' ? '[data-like]' : '[data-pass]', next) : $('button', end);
+        if (target) target.focus({ preventScroll: true });
+      }
     }
 
     function fly(dir, fromButton) {
@@ -214,7 +215,8 @@
       if (dragger) { dragger.kill(); dragger = null; }
       if (dir > 0) {
         haptic(12);
-        var rect = (fromButton ? likeBtn : card).getBoundingClientRect();
+        var origin = fromButton && $('[data-like]', card);
+        var rect = (origin || card).getBoundingClientRect();
         heartBurst(rect.left + rect.width / 2, rect.top + rect.height * (fromButton ? .5 : .35));
       }
       if (!gsap || reduce) {
@@ -308,6 +310,7 @@
           }
         },
         onClick: function (e) {
+          if (e.target && e.target.closest && e.target.closest('button')) return;
           var r = card.getBoundingClientRect();
           var cx = e.clientX != null ? e.clientX : (e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientX : r.left + r.width / 2);
           nextPhoto(card, cx < r.left + r.width * .35);
@@ -322,6 +325,9 @@
       setTimeout(function () {
         var card = top();
         if (!card || touched || busy) return;
+        // Solo si se ve: si ya has bajado, no se mueve nada fuera de pantalla.
+        var sr = stack.getBoundingClientRect();
+        if (sr.bottom < 0 || sr.top > window.innerHeight) return;
         gsap.timeline()
           .to(card, { x: -26, rotation: -3, duration: .38, ease: 'power2.out', onUpdate: function () { stamps(card, gsap.getProperty(card, 'x')); } })
           .to(card, { x: 22, rotation: 2.5, duration: .5, ease: 'power2.inOut', onUpdate: function () { stamps(card, gsap.getProperty(card, 'x')); } })
@@ -331,14 +337,19 @@
     stack.addEventListener('pointerdown', function () { loadVendor(); }, { passive: true });
     cards.forEach(function (card) {
       card.addEventListener('click', function (e) {
+        if (e.target.closest('button')) return;
         // Con Draggable activo, el toque lo recoge su onClick.
         if (dragger || moved) { moved = false; return; }
         var r = card.getBoundingClientRect();
         nextPhoto(card, e.clientX < r.left + r.width * .35);
       });
     });
-    likeBtn.addEventListener('click', function () { fly(1, true); });
-    passBtn.addEventListener('click', function () { fly(-1, true); });
+    stack.addEventListener('click', function (e) {
+      var like = e.target.closest('[data-like]'), pass = e.target.closest('[data-pass]');
+      if (!like && !pass) return;
+      e.stopPropagation();
+      fly(like ? 1 : -1, true);
+    });
     // Con el foco en el mazo o en sus botones, las flechas también eligen.
     (stack.closest('.hero-stage') || stack).addEventListener('keydown', function (e) {
       if (e.target.closest && e.target.closest('.stack-end')) return;
@@ -350,7 +361,8 @@
       index = 0;
       cards.forEach(resetCard);
       setClasses();
-      if (likeBtn) likeBtn.focus();
+      var first = $('[data-like]', top());
+      if (first) first.focus({ preventScroll: true });
     });
 
     setClasses();
@@ -393,7 +405,42 @@
   }
   if (match) {
     $('[data-match-close]', match).addEventListener('click', function () { match.close(); });
-    match.addEventListener('close', function () { var like = $('[data-like]'); if (like && !like.disabled) like.focus({ preventScroll: true }); });
+    match.addEventListener('close', function () { var card = $('[data-card].is-top'); var like = card && $('[data-like]', card); if (like) like.focus({ preventScroll: true }); });
+  }
+
+  // ---------- Cómo funciona: el chat se escribe solo al bajar ----------
+
+  var talk = $('[data-talk]');
+  if (talk) {
+    var dateCard = $('.date-card', talk);
+    if (reduce) {
+      // Con "reducir movimiento" se ve la conversación terminada, sin escribir ni animar nada.
+      if (dateCard) dateCard.classList.add('is-ok');
+    } else {
+      talk.classList.add('is-live');
+      var bits = $$('[data-at]', talk);
+      var typings = $$('.typing', talk);
+      var steps = $$('[data-talk-steps] li', talk);
+      var stepAt = [0, .18, .54, .8];
+      var ticking = false;
+      var paint = function () {
+        ticking = false;
+        var r = talk.getBoundingClientRect();
+        var total = Math.max(1, talk.offsetHeight - window.innerHeight);
+        var p = Math.max(0, Math.min(1, -r.top / total));
+        bits.forEach(function (el) { el.classList.toggle('on', p >= parseFloat(el.getAttribute('data-at'))); });
+        typings.forEach(function (el) {
+          el.classList.toggle('on', p >= parseFloat(el.getAttribute('data-from')) && p < parseFloat(el.getAttribute('data-to')));
+        });
+        if (dateCard) dateCard.classList.toggle('is-ok', p >= parseFloat(dateCard.getAttribute('data-ok-at')));
+        var active = 0;
+        stepAt.forEach(function (v, i) { if (p >= v) active = i; });
+        steps.forEach(function (li, i) { li.classList.toggle('is-on', i === active); });
+      };
+      window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }, { passive: true });
+      window.addEventListener('resize', paint);
+      paint();
+    }
   }
 
   // ---------- Barra fija con el botón ----------

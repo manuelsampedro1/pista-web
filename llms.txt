@@ -27,8 +27,10 @@
 ## Lista de espera
 
 - Te apuntas en la web con tu nombre, tu correo y tu ciudad, y confirmas el correo.
-- Cada persona que se apunte con tu enlace y confirme su correo os sube 50 puestos a los dos. Contar tu género, a quién buscas y tus deportes (opcional, con su propio consentimiento) sube 25 más.
 - Se abre por tandas, por control de calidad, para que al entrar haya gente que encaje contigo.
+- La única forma de entrar antes es una invitación de alguien que ya esté dentro. Compartir el enlace de la lista no adelanta puestos.
+- Quien está dentro tiene 5 invitaciones su primera semana y después 3 cada semana. Cada invitación sirve para una persona y se abre en pista.one/i/ con su código.
+- Contar tu género, a quién buscas y tus deportes es opcional y sirve para preparar tu ciudad. No cambia tu puesto.
 
 ## Enlaces
 

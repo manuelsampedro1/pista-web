@@ -10,7 +10,6 @@
      mock_profile=ok|INVALID:consent|RATE_LIMITED
      mock_ref=Laura          nombre de quien invita (con ?r=CODIGO); mock_ref= (vacío) para un código que no existe
      mock_profile_done=1     la tarjeta ya trae el perfil hecho
-     mock_refs=3             personas traídas
      mock_total=307          contador sin llamar al servidor */
 (function () {
   'use strict';
@@ -25,8 +24,8 @@
   var TOTAL = parseInt(get('mock_total', '307'), 10) || 307;
   var card = {
     status: 'pending', first_name: 'Laura', city_slug: 'madrid', city_name: 'Madrid', position: parseInt(get('mock_pos', '308'), 10) || 308,
-    total: TOTAL + 1, waiting: TOTAL + 1, points: 50, share_code: 'K7M2Q9XA', share_url: 'https://pista.one/r/K7M2Q9XA',
-    referrals: parseInt(get('mock_refs', '0'), 10) || 0, referral_points: 50, welcome_points: 50, profile_points: 25,
+    total: TOTAL + 1, waiting: TOTAL + 1, points: 0, share_code: 'K7M2Q9XA', share_url: 'https://pista.one/r/K7M2Q9XA',
+    referrals: 0, referral_points: 0, welcome_points: 0, profile_points: 0,
     profile_done: get('mock_profile_done', '') === '1', referred_by_name: null, city_open: false, locale: lang, access_expires_at: null
   };
   var copy = function (extra) { return Object.assign({}, card, extra || {}); };
@@ -53,14 +52,12 @@
       var ps = get('mock_profile', 'ok');
       if (ps !== 'ok') throw fail(ps);
       if (!p.p_consent) throw fail('INVALID:consent');
-      card.position = Math.max(1, card.position - card.profile_points);
-      card.points += card.profile_points;
       card.profile_done = true;
       return copy({ status: get('mock_status', 'pending') });
     }
     if (name === 'waitlist_status') {
       if (p.p_token === 'bad') throw fail('NOT_FOUND');
-      return copy({ status: get('mock_status', 'confirmed'), position: Math.max(1, card.position - card.referral_points * card.referrals) });
+      return copy({ status: get('mock_status', 'confirmed') });
     }
     if (name === 'waitlist_confirm') {
       if (p.p_token === 'bad') throw fail('NOT_FOUND');

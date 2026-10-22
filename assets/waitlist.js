@@ -1,7 +1,8 @@
 /* Pista, lista de espera. Formulario de tres campos (nombre, correo y ciudad) en la portada y en /lista/, hoja
-   para apuntarse (<dialog> nativo), celebración con el número, enlace para subir puestos (WhatsApp, story de
-   Instagram, compartir y copiar), paso opcional de perfil, página privada de estado (?s=TOKEN), confirmación
-   (?confirmar=TOKEN, ?confirm=TOKEN), enlace de quien te invita (?r=CODIGO) y contador en directo.
+   para apuntarse (<dialog> nativo), celebración con el número, pedir invitación (WhatsApp, story de Instagram,
+   compartir y copiar), campo para entrar con un código, paso opcional de perfil, página privada de estado
+   (?s=TOKEN), confirmación (?confirmar=TOKEN, ?confirm=TOKEN), enlace de quien te recomienda Pista (?r=CODIGO)
+   y contador en directo. La lista es solo por invitación: compartir no da puestos.
    Sin cookies ni almacenamiento: el token privado solo vive en la URL de la página de estado.
 
    Modo de prueba: con ?mock=1, y siempre en localhost (salvo ?live=1), las llamadas que escriben no tocan el
@@ -384,16 +385,9 @@
 
     var link = card.share_url || '';
     $('[data-share-link]', view).textContent = shortLink(link);
-    var rule = $('[data-share-rule]', view);
-    rule.textContent = fill(rule.getAttribute('data-template'), { p: card.referral_points || 50 });
     $('[data-share-wa]', view).href = 'https://wa.me/?text=' + encodeURIComponent(T.share_msg + ' ' + link);
     var native = $('[data-share-native]', view);
     native.hidden = !navigator.share;
-    var stats = $('[data-share-stats]', view);
-    if (typeof card.referrals === 'number' && (card.referrals > 0 || (opts.status && !opts.fresh))) {
-      stats.textContent = card.referrals === 0 ? T.refs_0 : card.referrals === 1 ? T.refs_1 : fill(T.refs_n, { n: card.referrals });
-      stats.hidden = false;
-    } else stats.hidden = true;
 
     var more = $('[data-more]', view);
     var moreDone = $('[data-more-done]', view);
@@ -403,10 +397,6 @@
       moreDone.hidden = false;
     } else if (state.token) {
       more.hidden = false;
-      var title = $('[data-more-title]', view);
-      title.textContent = fill(title.getAttribute('data-template'), { p: card.profile_points || 25 });
-      var submit = $('[data-more-submit]', view);
-      submit.textContent = fill(submit.getAttribute('data-template'), { p: card.profile_points || 25 });
     } else {
       more.hidden = true;
     }
@@ -473,19 +463,14 @@
       var button = $('[data-more-submit]', form);
       button.disabled = true;
       button.setAttribute('aria-busy', 'true');
-      var before = (state.card && state.card.position) || null;
       rpc('waitlist_profile', { p_token: state.token, p_gender: gender, p_seeking: seeking, p_sports: sports, p_consent: true })
         .then(function (card) {
-          var gained = before && card.position ? Math.max(0, before - card.position) : (card.profile_points || 25);
-          state.card = Object.assign({}, state.card || {}, card);
+          state.card = Object.assign({}, state.card || {}, card, { profile_done: true });
           var moreDone = $('[data-more-done]', view);
-          moreDone.textContent = fill(T.more_done, { p: nf.format(gained || card.profile_points || 25) });
-          card.profile_done = true;
+          moreDone.textContent = T.more_done;
           renderDone(view.parentNode, state.card, { pending: !$('[data-done-mail]', view).hidden, note: $('[data-done-status]', view).hidden ? null : $('[data-done-status]', view).textContent });
-          var pos = $('[data-done-pos]', view);
-          pos.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
-          $$('[data-dock-label]').forEach(function (el) { if (card.position) el.textContent = fill(T.dock_joined, { pos: nf.format(card.position) }); });
-          burst($('[data-done-burst]', view), 10, 110);
+          moreDone.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+          if (card.position) $$('[data-dock-label]').forEach(function (el) { el.textContent = fill(T.dock_joined, { pos: nf.format(card.position) }); });
         }, function (err) {
           error.textContent = err && err.code === 'INVALID' && err.detail === 'consent' ? T.err_consent
             : err && err.code === 'INVALID' ? T.err_profile : errorMessage(err);
@@ -534,7 +519,7 @@
 
   function makeStory(card) {
     var W = 1080, H = 1920;
-    var fonts = ['400 150px Newsreader', 'italic 400 150px Newsreader', '600 40px "DM Sans"', 'extra-condensed 900 300px Archivo'];
+    var fonts = ['400 112px Newsreader', 'italic 400 112px Newsreader', '600 40px "DM Sans"', '500 32px "DM Sans"', 'extra-condensed 900 220px Archivo'];
     var holder = d.querySelector('[data-story-photos]');
     var srcs = holder ? holder.getAttribute('data-story-photos').split('|').filter(Boolean) : [];
     var names = holder ? holder.getAttribute('data-story-names').split('|') : [];
@@ -545,13 +530,8 @@
         var c = d.createElement('canvas');
         c.width = W; c.height = H;
         var ctx = c.getContext('2d');
-        // Fondo verde noche con un brillo cálido.
-        ctx.fillStyle = '#0E2A21';
-        ctx.fillRect(0, 0, W, H);
-        var g = ctx.createRadialGradient(W * .7, H * .32, 40, W * .7, H * .32, 1000);
-        g.addColorStop(0, 'rgba(217,100,58,.5)');
-        g.addColorStop(1, 'rgba(217,100,58,0)');
-        ctx.fillStyle = g;
+        // Papel, tinta y fotos: como la web y la app.
+        ctx.fillStyle = '#F7F6F4';
         ctx.fillRect(0, 0, W, H);
         // Marca. Todo lo importante queda entre los 220 px de arriba y los 260 de abajo, que tapa Instagram.
         var wm = wordmarkPath();
@@ -559,82 +539,63 @@
           ctx.save();
           ctx.translate(84, 232);
           ctx.scale(.86, .86);
-          ctx.fillStyle = '#F7F6F4';
+          ctx.fillStyle = '#111111';
           ctx.fill(wm);
           ctx.beginPath(); ctx.arc(62.8, -71.4, 8.1, 0, Math.PI * 2); ctx.fillStyle = '#D7F24B'; ctx.fill();
+          ctx.lineWidth = 1.2; ctx.strokeStyle = '#111111'; ctx.stroke();
           ctx.restore();
         }
-        ctx.fillStyle = 'rgba(247,246,244,.74)';
+        ctx.fillStyle = '#5C5C5C';
         ctx.font = '500 32px "DM Sans", sans-serif';
         ctx.fillText(T.story_kicker, 84, 300);
-        // Dos perfiles como en la app, con el corazón entre medias.
+        // Dos perfiles como en la app.
         var cardAt = function (img, cx, cy, rot, name) {
-          var w = 400, h = 500;
+          var w = 380, h = 440;
           ctx.save();
           ctx.translate(cx, cy);
           ctx.rotate(rot * Math.PI / 180);
-          ctx.shadowColor = 'rgba(0,0,0,.5)'; ctx.shadowBlur = 60; ctx.shadowOffsetY = 26;
-          roundRect(ctx, -w / 2, -h / 2, w, h, 36);
-          ctx.fillStyle = '#143F31';
+          roundRect(ctx, -w / 2, -h / 2, w, h + 88, 30);
+          ctx.fillStyle = '#FFFFFF';
           ctx.fill();
-          ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+          ctx.lineWidth = 2; ctx.strokeStyle = '#E4E4E4'; ctx.stroke();
           ctx.save();
-          roundRect(ctx, -w / 2, -h / 2, w, h, 36);
+          roundRect(ctx, -w / 2, -h / 2, w, h, 30);
           ctx.clip();
           if (img) drawCover(ctx, img, -w / 2, -h / 2, w, h, .3);
-          var sh = ctx.createLinearGradient(0, 0, 0, h / 2);
-          sh.addColorStop(0, 'rgba(6,18,14,0)');
-          sh.addColorStop(1, 'rgba(6,18,14,.85)');
-          ctx.fillStyle = sh;
-          ctx.fillRect(-w / 2, 0, w, h / 2);
           ctx.restore();
-          ctx.fillStyle = '#FFFFFF';
-          ctx.font = '400 46px Newsreader, Georgia, serif';
-          ctx.fillText(name || '', -w / 2 + 30, h / 2 - 36);
+          ctx.fillStyle = '#111111';
+          ctx.font = '600 40px "DM Sans", sans-serif';
+          ctx.fillText(name || '', -w / 2 + 28, h / 2 + 58);
           ctx.restore();
         };
-        cardAt(imgs[0], 330, 640, -7, names[0]);
-        cardAt(imgs[1], 750, 600, 6, names[1]);
-        ctx.save();
-        ctx.translate(540, 872);
-        ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 16;
-        ctx.beginPath(); ctx.arc(0, 0, 64, 0, Math.PI * 2); ctx.fillStyle = '#C04E27'; ctx.fill();
-        ctx.shadowColor = 'transparent';
-        ctx.translate(-31, -31);
-        ctx.scale(2.6, 2.6);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill(new Path2D('M12 20.4s-7.6-4.5-9.2-9.2C1.6 7.7 3.9 4.5 7.2 4.5c2 0 3.6 1.1 4.8 2.8 1.2-1.7 2.8-2.8 4.8-2.8 3.3 0 5.6 3.2 4.4 6.7-1.6 4.7-9.2 9.2-9.2 9.2Z'));
-        ctx.restore();
+        cardAt(imgs[0], 310, 610, -6, names[0]);
+        cardAt(imgs[1], 750, 590, 5, names[1]);
         // Titular.
-        ctx.fillStyle = '#F7F6F4';
-        ctx.font = '400 118px Newsreader, Georgia, serif';
-        ctx.fillText(T.story_h1, 80, 1036);
-        ctx.fillStyle = '#F0956C';
-        ctx.font = 'italic 400 118px Newsreader, Georgia, serif';
-        ctx.fillText(T.story_h2, 80, 1146);
+        ctx.fillStyle = '#111111';
+        ctx.font = '400 112px Newsreader, Georgia, serif';
+        ctx.fillText(T.story_h1, 80, 1060);
+        ctx.font = 'italic 400 112px Newsreader, Georgia, serif';
+        ctx.fillText(T.story_h2, 80, 1166);
         // Número.
         var num = nf.format(card.position || 0);
-        ctx.fillStyle = 'rgba(247,246,244,.74)';
+        ctx.fillStyle = '#5C5C5C';
         ctx.font = '500 36px "DM Sans", sans-serif';
-        ctx.fillText(fill(T.story_num, { pos: '' }).trim(), 84, 1236);
-        ctx.fillStyle = '#F7F6F4';
-        ctx.font = 'extra-condensed 900 250px Archivo, "DM Sans", sans-serif';
-        ctx.fillText(num, 76, 1450);
-        ctx.fillStyle = 'rgba(247,246,244,.74)';
-        ctx.font = '500 36px "DM Sans", sans-serif';
-        ctx.fillText(T.story_list, 84, 1508);
-        // Enlace en una píldora y la frase para que se apunten.
-        var link = shortLink(card.share_url);
+        ctx.fillText(T.story_num, 84, 1252);
+        ctx.fillStyle = '#111111';
+        ctx.font = 'extra-condensed 900 220px Archivo, "DM Sans", sans-serif';
+        ctx.fillText((lang === 'es' ? 'nº ' : 'No. ') + num, 76, 1448);
+        ctx.fillStyle = '#111111';
         ctx.font = '600 40px "DM Sans", sans-serif';
+        ctx.fillText(T.story_cta, 84, 1530);
+        // Enlace en una píldora negra.
+        var link = shortLink(card.share_url);
+        ctx.font = '600 38px "DM Sans", sans-serif';
         var lw = ctx.measureText(link).width + 80;
-        roundRect(ctx, 84, 1552, Math.min(lw, W - 168), 92, 46);
-        ctx.fillStyle = '#C04E27';
+        roundRect(ctx, 84, 1574, Math.min(lw, W - 168), 88, 44);
+        ctx.fillStyle = '#111111';
         ctx.fill();
         ctx.fillStyle = '#FFFFFF';
-        ctx.fillText(link, 124, 1612);
-        ctx.fillStyle = 'rgba(247,246,244,.74)';
-        ctx.font = '500 32px "DM Sans", sans-serif';
-        ctx.fillText(T.story_cta, 84, 1700);
+        ctx.fillText(link, 124, 1632);
         return new Promise(function (resolve) { c.toBlob(function (b) { resolve(b); }, 'image/png'); });
       });
   }
@@ -676,7 +637,39 @@
     storyDialog.addEventListener('click', function (e) { if (e.target === storyDialog) storyDialog.close(); });
   }
 
-  // ---------- Quien te invita ----------
+  // ---------- "¿Tienes una invitación? Entra directo" ----------
+
+  // Invitación (8), acceso de la lista (12) o embajador (PISTA-NOMBRE): la página de cada enlace corto lo comprueba.
+  function codeTarget(raw) {
+    // También vale el enlace entero (pista.one/i/CODIGO, ...?c=CODIGO): nos quedamos con lo de después de la última / o =.
+    var code = String(raw || '').toUpperCase().replace(/\s+/g, '').replace(/[\/?#]+$/, '').replace(/^.*[\/=]/, '');
+    var langQ = lang === 'en' ? '&lang=en' : '';
+    if (/^PISTA-?[A-Z0-9]{2,20}$/.test(code)) return '/e/?c=' + encodeURIComponent(code.replace(/^PISTA-?/, 'PISTA-')) + langQ;
+    var clean = code.replace(/-/g, '');
+    if (/^[ABCDEFGHJKMNPQRSTUVWXYZ2-9]{8}$/.test(clean)) return '/i/?c=' + clean + langQ;
+    if (/^[ABCDEFGHJKMNPQRSTUVWXYZ2-9]{12}$/.test(clean)) return '/a/?c=' + clean + langQ;
+    return null;
+  }
+  $$('[data-code-form]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = form.elements.namedItem('code');
+      var err = $('[data-code-err]', form);
+      var target = codeTarget(input.value);
+      if (!target) {
+        input.setAttribute('aria-invalid', 'true');
+        err.textContent = T.err_code;
+        err.hidden = false;
+        input.focus();
+        return;
+      }
+      input.removeAttribute('aria-invalid');
+      err.hidden = true;
+      location.href = target;
+    });
+  });
+
+  // ---------- Quien te recomienda Pista ----------
 
   function showReferrer(name) {
     var initial = name ? name.trim().charAt(0).toUpperCase() : '';
